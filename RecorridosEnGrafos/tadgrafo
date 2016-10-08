@@ -16,7 +16,7 @@ class Vert:
         return self.vecinos
 
     def get_weight (self, dst):
-        return self.vecinos[dst]
+        return self.vecinos[dst].get_weight()
 
     def visitar(self):
         self.visitado = True
@@ -41,8 +41,7 @@ class Digraph:
     def __init__(g, V):  # @NoSelf
         """Construye un grafo sin aristas de V vértices.
         """
-        g.cant_vertices = V
-        g.cant_aristas = 0
+        g.aristas = []
         g.vertices = {}
         for i in range(0,V):
             new_vert = Vert(i)
@@ -51,45 +50,44 @@ class Digraph:
     def V(g):   # @NoSelf
         """Número de vértices en el grafo.
         """
-        return g.cant_vertices
+        return len(g.vertices)
 
     def E(g):   # @NoSelf
         """Número de aristas en el grafo.
         """
-        return g.cant_aristas
+        return len(g.aristas)
 
     def adj_e(g, v):    # @NoSelf
         """Itera sobre los aristas incidentes _desde_ v.
         """
         aristas_incidentes_de_v = {}
         cant_aristas_incidentes_desde_v = 0
-        for i in range(0,g.cant_aristas):
+        for i in range(0,len(g.aristas)):
             if g.aristas[i].get_from() == v : 
                 aristas_incidentes_de_v[cant_aristas_incidentes_desde_v] = g.vertices[g.aristas[i].get_to()]
                 cant_aristas_incidentes_desde_v = cant_aristas_incidentes_desde_v + 1
-        return iter(range(cant_aristas_incidentes_desde_v))
+        return iter(aristas_incidentes_de_v)
 
 
 
     def adj(g, v):  # @NoSelf
         """Itera sobre los vértices adyacentes a ‘v’.
         """
-        return iter(range(g.vertices[v].get_neighbors(g.vertices[v])))
+        return iter(g.vertices[v].get_neighbors())
 
 
     def add_edge(g, u, v, weight=0):    # @NoSelf
         """Añade una arista al grafo.
         """
-        g.cant_aristas = g.cant_aristas + 1
         g.vertices[u].add_neighbor(g.vertices[v],weight)
         g.vertices[v].add_neighbor(g.vertices[u],weight)
         new_edge = Arista(u,v,weight)
-        g.aristas[g.cant_aristas] = new_edge
+        g.aristas.append(new_edge)
 
 
     def __iter__(g):    # @NoSelf
         """Itera de 0 a V."""
-        return iter(range(g.vertices()))
+        return iter(range(g.vertices))
 
     def iter_edges(g):  # @NoSelf
         """Itera sobre todas las aristas del grafo.
@@ -100,7 +98,7 @@ class Digraph:
             • e.dst
             • e.weight
         """
-        return iter(range(g.aristas()))
+        return iter(g.aristas)
 
     def sacar_visitados(g): # @NoSelf
         for i in range(0,g.V):
@@ -132,6 +130,37 @@ class Arista:
         return self.dst
     
 
+
+d4 = Digraph(4)
+
+print "aristas = " + str(d4.E())
+print "vertices = " + str(d4.V())
+
+# testeo las funciones de Digraph
+
+d4.add_edge( 1, 2, 2)
+d4.add_edge( 0, 1, 3)
+d4.add_edge( 0, 3, 15)
+d4.add_edge( 1, 3, 9)
+d4.add_edge( 1, 1)
+d4.add_edge( 2, 3, 7)
+
+print "aristas = " + str(d4.E())
+print "vertices = " + str(d4.V())
+
+
+
+i = d4.iter_edges()
+for a in i:
+    print a.get_weight()
+""""i = asd.adj_e(asd.V())
+try:
+    print i.next()
+except StopIteration:
+    pass
+"""
+
+#FUNCIONES DE FER
 
 """
 def heuristica (g,i,f,peso = 0):
@@ -171,12 +200,3 @@ def get_random_nodo(vecinos):
   return vecinos[num_random]
 """
 # link importante: http://code.activestate.com/recipes/119466-dijkstras-algorithm-for-shortest-paths/
-
-asd = Digraph(4)
-print asd.E()
-print asd.V()
-i = asd.adj_e(asd.V())
-print i.next()
-
-
-
