@@ -1,0 +1,53 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+from abc import ABCMeta, abstractmethod
+
+class Caminos():
+	__metaclass__ = ABCMeta
+
+	def __init__(self,g,vo,vd):
+		POSITIVE_INFINITY = 999999
+		pass
+
+	@abstractmethod
+	def distancia(self, v):
+		pass
+
+	@abstractmethod
+	def edge_to(self, v):
+		pass
+
+	def visitado(self, v):
+		return  self.distancia(v) < self.POSITIVE_INFINITY
+		
+	def camino(self):
+		resultado = []
+		return NotImplemented
+
+
+
+class Dijkstra(Caminos):
+
+	def __init__(self,g,vo,vd):
+		return NotImplemented
+
+	def distancia(self, v):
+		return NotImplemented
+
+	def edge_to(self, v):
+		return NotImplemented
+
+	
+class Aasterisk(Caminos):
+
+	def __init__(self,g,vo,vd):
+		return NotImplemented
+
+	def distancia(self, v):
+		return NotImplemented
+
+	def edge_to(self, v):
+		return NotImplemented
+		
+		
+c = Caminos(2,3)
