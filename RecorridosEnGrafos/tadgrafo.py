@@ -39,6 +39,12 @@ class Vert:
     def set_distancia(self, distancia):
         self.distancia = distancia
         
+    def set_distancia_inf():
+        self.distancia = POSITIVE_INFINITY
+
+    def set_padre_vacio():
+        self.padre = None
+
     def get_distancia(self):
         return self.distancia
 
@@ -125,6 +131,12 @@ class Digraph:
     def sacar_visitados(g): # @NoSelf
         for i in range(0,g.V):
             g.vertices[i].setear_no_visitado()
+    def poner_distancias_inf(g): # @NoSelf
+        for i in range(0,g.V):
+            g.vertices[i].poner_distancias_inf()
+    def set_padres_vacio(g): # @NoSelf
+        for i in range(0,g.V):
+            g.vertices[i].set_padre_vacio()
 
 """    def get_weight(g,i,f):  # @NoSelf
         for i in range(0,g.cant_aristas):
@@ -194,4 +206,3 @@ def get_random_nodo(vecinos):
   num_random = randint(0,cant_vecinos)
   return vecinos[num_random]
 """
-# link importante: http://code.activestate.com/recipes/119466-dijkstras-algorithm-for-shortest-paths/
