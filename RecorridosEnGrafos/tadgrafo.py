@@ -1,14 +1,17 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import random
-
+from tadCaminos import *
+from constantes import *
 
 class Vert:
     def __init__(self,node):
         self.id = node
         self.vecinos = {}
         self.visitado = False
-        
+        self.distancia = POSITIVE_INFINITY
+        self.padre = None 
+                
     def add_neighbor (self ,dst,w = 0):
         self.vecinos[dst] = w
 
@@ -29,6 +32,15 @@ class Vert:
 
     def setear_no_visitado(self):
         self.visitado = False
+        
+    def set_padre(self, padre):
+        self.padre = padre
+        
+    def set_distancia(self, distancia):
+        self.distancia = distancia
+        
+    def get_distancia(self):
+        return self.distancia
 
 
 class Digraph:
@@ -81,7 +93,6 @@ class Digraph:
         """Añade una arista al grafo.
         """
         g.vertices[u].add_neighbor(g.vertices[v],weight)
-        g.vertices[v].add_neighbor(g.vertices[u],weight)
         new_edge = Arista(u,v,weight)
         g.aristas.append(new_edge)
 
@@ -89,6 +100,16 @@ class Digraph:
     def __iter__(g):    # @NoSelf
         """Itera de 0 a V."""
         return iter(range(g.vertices))
+    
+    def get_V(g,v): # @NoSelf
+        return g.vertices[v]
+    
+    def get_A(self, src, dst):
+        for i in range(0,len(self.aristas)):
+            arista = self.aristas[i]
+            if (arista.get_from() == src ) and (arista.get_to() == dst) : 
+                return arista
+        return None
 
     def iter_edges(g):  # @NoSelf
         """Itera sobre todas las aristas del grafo.
@@ -115,7 +136,7 @@ class Digraph:
 class Arista:
     """Arista de un grafo.
       """
-    def __init__(self, src, dst, weight):
+    def __init__(self, src, dst, weight=0):
         # inicializar y do things 
         self.src = src
         self.dst = dst
@@ -132,46 +153,7 @@ class Arista:
     
 
 
-d4 = Digraph(4)
 
-print "aristas = " + str(d4.E())
-print "vertices = " + str(d4.V())
-
-# testeo las funciones de Digraph
-print "agrego aristas"
-d4.add_edge( 1, 2, 2)
-d4.add_edge( 0, 1, 3)
-d4.add_edge( 0, 3, 15)
-d4.add_edge( 1, 3, 9)
-d4.add_edge( 1, 1)
-d4.add_edge( 2, 3, 7)
-
-print "aristas = " + str(d4.E())
-print "vertices = " + str(d4.V())
-
-print "testeo iter_edges()" 
-
-i = d4.iter_edges()
-for a in i:
-    print a.get_weight()
-    
-print "testeo adj_e"
-i = d4.adj_e( 1) 
-for a in i:
-    print a.get_weight()
-    
-print "testeo adj"
-i = d4.adj( 1) 
-for a in i:
-    print a.get_id()
-    
-
-""""i = asd.adj_e(asd.V())
-try:
-    print i.next()
-except StopIteration:
-    pass
-"""
 
 #FUNCIONES DE FER
 
