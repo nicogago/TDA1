@@ -14,16 +14,19 @@ class Caminos():
 		self.resultado = []
 		pass
 
-	@abstractmethod
 	def distancia(self, v):
-		pass
-
-	@abstractmethod
-	def edge_to(self, v):
-		pass
+		total = 0
+		for i in range(0,len(self.resultado)):
+			total = total+self.resultado[i][0]
+			if self.resultado[i][1] == v:
+				return total
+		return POSITIVE_INFINITY
 
 	def visitado(self, v):
-		return  self.distancia(v) < self.POSITIVE_INFINITY
+		for i in range(0,len(self.resultado)):
+			if self.resultado[i][1] == v:
+				return True
+		return False
 		
 	def camino(self):
 		return self.resultado
@@ -41,7 +44,7 @@ class Dijkstra(Caminos):
 		while heap and not g.get_V(vd).fue_visitado():
 			verticeVisitado = heapq.heappop(heap)
 			g.get_V(verticeVisitado[1]).visitar()
-			self.resultado.append(verticeVisitado[1])
+			self.resultado.append(verticeVisitado)
 			verticesAdyacentes = g.adj(verticeVisitado[1])
 			
 			for vertice in verticesAdyacentes:
@@ -52,21 +55,8 @@ class Dijkstra(Caminos):
 					vertice.set_padre(verticeVisitado)
 					heappush(heap,(pesoDelVisitadoAlVertice,vertice.get_id()))
 					
-	def distancia(self, v):
-		return NotImplemented
-
-	def edge_to(self, v):
-		return NotImplemented
-
 	
 class Aasterisk(Caminos):
 
 	def __init__(self,g,vo,vd):
 		return NotImplemented
-
-	def distancia(self, v):
-		return NotImplemented
-
-	def edge_to(self, v):
-		return NotImplemented
-		

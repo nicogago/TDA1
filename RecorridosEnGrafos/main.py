@@ -41,3 +41,22 @@ for a in i:
 print "testeo Dijkstra"
 d = Dijkstra( d4, 0, 3)
 print d.camino()
+print d.distancia(1)
+print d.distancia(2)
+print d.distancia(3)
+
+print "otro grafo"
+d6 = Digraph(6)
+print "agrego aristas"
+d6.add_edge( 0, 1, 4)
+d6.add_edge( 0, 2, 2)
+d6.add_edge( 1, 3, 5)
+d6.add_edge( 2, 3, 8)
+d6.add_edge( 2, 4, 10)
+d6.add_edge( 3, 4, 2)
+d6.add_edge( 4, 3, 2)
+d6.add_edge( 3, 5, 6)
+d6.add_edge( 4, 5, 2)
+print "testeo Dijkstra"
+d = Dijkstra( d6, 0, 5)
+print d.camino()
