@@ -28,7 +28,7 @@ def BFS_heuristica(grafo,i,f):
 	if i.get_id() == f.get_id():
 		termine = True
 
-	while cola or not termine:
+	while cola and not termine:
 		# extraemos el nodo u de la cola Q y exploramos todos sus nodos adyacentes
 		u = cola.pop(0)
 		print u.get_id()
@@ -88,7 +88,7 @@ class Cola_prioridad:
 		return elem
 
 
-graph = Digraph(17)
+graph = Digraph(19)
 graph.add_edge( 0, 1, 1)
 graph.add_edge( 0, 2, 2)
 graph.add_edge( 0, 3, 3)
@@ -106,5 +106,5 @@ graph.add_edge( 8, 13, 14)
 graph.add_edge( 9, 10, 15)
 graph.add_edge( 10, 16, 16)
 
-ads = BFS_heuristica(graph,graph.get_V(0),graph.get_V(11))
+ads = BFS_heuristica(graph,graph.get_V(0),graph.get_V(18))
 print ads
