@@ -18,9 +18,9 @@ def BFS(grafo,i,f):
 	if i.get_id() == f.get_id():
 		termine = True
 
-	while not colaQ or not termine:
+	while colaQ and not termine:
 	# extraemos el nodo u de la cola Q y exploramos todos sus nodos adyacentes
-		u = colaQ.pop()
+		u = colaQ.pop(0)
 		print u.get_id()
 		adj_u = grafo.adj(u.get_id())
 		for v in adj_u:
@@ -28,6 +28,7 @@ def BFS(grafo,i,f):
 				v.visitar()
 				v.set_distancia(u.get_distancia() + 1)
 				v.set_padre(u)
+
 				colaQ.append(v)
 				if v.get_id() == f.get_id():
 					return v.get_distancia()
@@ -38,7 +39,7 @@ def BFS(grafo,i,f):
 
 
 
-graph = Digraph(17)
+graph = Digraph(19)
 graph.add_edge( 0, 1, 1)
 graph.add_edge( 0, 2, 2)
 graph.add_edge( 0, 3, 3)
@@ -56,5 +57,5 @@ graph.add_edge( 8, 13, 14)
 graph.add_edge( 9, 10, 15)
 graph.add_edge( 10, 16, 16)
 
-ads = BFS(graph,graph.get_V(1),graph.get_V(14))
+ads = BFS(graph,graph.get_V(0),graph.get_V(18))
 print ads
