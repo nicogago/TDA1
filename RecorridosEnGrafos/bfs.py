@@ -21,7 +21,7 @@ def BFS(grafo,i,f):
  	while !colaQ or !termine:
     # extraemos el nodo u de la cola Q y exploramos todos sus nodos adyacentes
     	u = colaQ[0]
-    	adj_u = g.adj(g,i)
+    	adj_u = grafo.adj(grafo,i)
     	for  v in adj_u:
        		if ! v.fue_visitado():
        			v.visitar()

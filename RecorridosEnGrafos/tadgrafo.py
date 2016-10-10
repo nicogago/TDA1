@@ -134,7 +134,7 @@ class Digraph:
     def poner_distancias_inf(g): # @NoSelf
         for i in range(0,g.V):
             g.vertices[i].poner_distancias_inf()
-    def set_padres_vacio(g): # @NoSelf
+    def eliminar_padres(g): # @NoSelf
         for i in range(0,g.V):
             g.vertices[i].set_padre_vacio()
 
