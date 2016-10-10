@@ -5,6 +5,10 @@ from tadCaminos import *
 from constantes import *
 from constantes import *
 
+from tadGrafo import *
+from busqueda_heuristica import *
+from bfs import *
+
 d4 = Digraph(4)
 
 print "aristas = " + str(d4.E())
@@ -60,3 +64,5 @@ d6.add_edge( 4, 5, 2)
 print "testeo Dijkstra"
 d = Dijkstra( d6, 0, 5)
 print d.camino()
+
+

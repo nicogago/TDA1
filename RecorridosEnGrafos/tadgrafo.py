@@ -39,10 +39,10 @@ class Vert:
     def set_distancia(self, distancia):
         self.distancia = distancia
         
-    def set_distancia_inf():
+    def set_distancia_inf(self):
         self.distancia = POSITIVE_INFINITY
 
-    def set_padre_vacio():
+    def set_padre_vacio(self):
         self.padre = None
 
     def get_distancia(self):
@@ -85,14 +85,14 @@ class Digraph:
         for i in range(0,len(g.aristas)):
             if g.aristas[i].get_from() == v : 
                 aristas_incidentes_de_v.append(g.aristas[i])
-        return iter(aristas_incidentes_de_v)
+        return aristas_incidentes_de_v
 
 
 
     def adj(g, v):  # @NoSelf
         """Itera sobre los vértices adyacentes a ‘v’.
         """
-        return iter(g.vertices[v].get_neighbors())
+        return g.vertices[v].get_neighbors().keys()
 
 
     def add_edge(g, u, v, weight=0):    # @NoSelf
@@ -105,7 +105,7 @@ class Digraph:
 
     def __iter__(g):    # @NoSelf
         """Itera de 0 a V."""
-        return iter(range(g.vertices))
+        return g.vertices
     
     def get_V(g,v): # @NoSelf
         return g.vertices[v]
@@ -129,13 +129,15 @@ class Digraph:
         return iter(g.aristas)
 
     def sacar_visitados(g): # @NoSelf
-        for i in range(0,g.V):
+        for i in range(0,len(g.vertices)):
             g.vertices[i].setear_no_visitado()
+
     def poner_distancias_inf(g): # @NoSelf
-        for i in range(0,g.V):
-            g.vertices[i].poner_distancias_inf()
+        for i in range(0,len(g.vertices)):
+            g.vertices[i].set_distancia_inf()
+    
     def eliminar_padres(g): # @NoSelf
-        for i in range(0,g.V):
+        for i in range(0,len(g.vertices)):
             g.vertices[i].set_padre_vacio()
 
 """    def get_weight(g,i,f):  # @NoSelf
