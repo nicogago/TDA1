@@ -45,4 +45,4 @@ for idx, i in enumerate(sorted_l):
 my_list  = [4, 1, 5, 9, 12, 3, 0, 2, 7, 6]
 sorted_l = [0, 1, 2, 3, 4, 5, 6, 7, 9, 12]
 for idx, i in enumerate(sorted_l):
-    assert quickSelect(my_list, 0, len(my_list)-1,  idx) == i
+    assert quickSelect(my_list, 0, len(my_list)-1,  idx+1) == i

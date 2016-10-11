@@ -90,8 +90,9 @@ def heapselect(conj, k):
     return conj[0]
 
 ## QUICKSELECT
+# k > 0
 # Funcion para encontrar pivote para luego particionar el arreglo
-def particionar(array, ini, fin, k):
+def particionar(array, ini, fin):
     i = ini - 1
     for j in range(ini, fin):
         if (array[j] < array[fin]):
@@ -103,15 +104,16 @@ def particionar(array, ini, fin, k):
     return i + 1
 
 def quickSelect(array, ini, fin, k):
+    k_real = k - 1
     if (ini == fin):
-        return array[k]
+        return array[k_real]
     # descartamos el subarray que no contiene al elemento k
-    pivote = particionar(array, ini, fin, k)
+    pivote = particionar(array, ini, fin)
 #    print array
 #    print "pivote: ", pivote
-    if (k == pivote):
-        return array[k]
-    if (k > pivote):
+    if (k_real == pivote):
+        return array[k_real]
+    if (k_real > pivote):
         ini = pivote + 1
     else:
         fin = pivote - 1
