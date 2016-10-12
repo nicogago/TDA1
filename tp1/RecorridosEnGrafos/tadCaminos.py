@@ -36,7 +36,6 @@ class Caminos():
 class Dijkstra(Caminos):
 
 	def __init__(self, g,vo,vd): 
-		print "init dijkstra way"
 		super(Dijkstra, self).__init__(g,vo,vd)
 		heap = []
 		heappush(heap,(0,vo))
@@ -49,14 +48,54 @@ class Dijkstra(Caminos):
 			
 			for vertice in verticesAdyacentes:
 				pesoDelVisitadoAlVertice = g.get_A(verticeVisitado[1], vertice.get_id()).get_weight()
-				print "pesoDelVisitadoAlVertice = " + str(pesoDelVisitadoAlVertice)
 				if ( not vertice.fue_visitado() ) and ( vertice.get_distancia() > pesoDelVisitadoAlVertice):
 					vertice.set_distancia(pesoDelVisitadoAlVertice)
 					vertice.set_padre(verticeVisitado)
 					heappush(heap,(pesoDelVisitadoAlVertice,vertice.get_id()))
 					
 	
-class Aasterisk(Caminos):
+class AEstrella(Caminos):
 
 	def __init__(self,g,vo,vd):
-		return NotImplemented
+		super(AEstrella, self).__init__(g,vo,vd)
+		abiertos = []
+		terna = [0, 0, vo] # [f(x), g(x), Id del vertice]
+		heappush(abiertos,(terna))
+		final = False
+		padre = None
+		verticeActual = None
+
+		abiertos.append(terna)
+		while abiertos and not final:
+			print "balblabal"
+			padre = verticeActual
+			terna = heapq.heappop(abiertos)
+			verticeActual = terna[2]
+			g.get_V(verticeActual).set_padre(padre)
+			if verticeActual != vd:
+				vecinos = g.adj(verticeActual)
+				ternaAGuardar = [0,0,0]
+				for v in vecinos:
+					id = v.get_id()
+					ternaAGuardar[2] = id 
+					ternaAGuardar[1] = terna[1] + g.get_A(verticeActual, id).get_weight() #el g(x) anterior + el nuevo peso
+					ternaAGuardar[0] = ternaAGuardar[1] + heuristica(id, vd) # el nuevo g(x) + heuristica desde aca al fin
+					heappush(abiertos,(ternaAGuardar))
+									
+			else:
+				final = True
+				g.get_V(verticeActual).set_padre(padre)
+
+		###ARMO EL RECORRIDO
+		while verticeActual != None:
+			print "holaaaa"
+			[verticeActual] + self.resultado
+			verticeActual = g.get_V(verticeActual).get_padre()
+			
+		
+	
+	# realizado según http://stackoverflow.com/questions/5849667/a-search-algorithm
+	
+		
+def heuristica(v,vd):
+	return 1

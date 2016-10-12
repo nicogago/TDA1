@@ -5,7 +5,7 @@ from tadCaminos import *
 from constantes import *
 from constantes import *
 
-from tadGrafo import *
+from tadgrafo import *
 from busqueda_heuristica import *
 from bfs import *
 
@@ -63,6 +63,34 @@ d6.add_edge( 3, 5, 6)
 d6.add_edge( 4, 5, 2)
 print "testeo Dijkstra"
 d = Dijkstra( d6, 0, 5)
+print d.camino()
+
+"""http://stackoverflow.com/questions/5849667/a-search-algorithm
+S=0
+A=1
+B=2
+Y=3
+X=4
+C=5
+D=6
+E=7"""
+
+print "3er grafo"
+d8 = Digraph(8)
+print "agrego aristas" 
+d8.add_edge( 0, 1, 1)
+d8.add_edge( 0, 2, 2)
+d8.add_edge( 1, 3, 7)
+d8.add_edge( 1, 4, 4)
+d8.add_edge( 2, 5, 7)
+d8.add_edge( 2, 6, 1)
+d8.add_edge( 3, 7, 3)
+d8.add_edge( 4, 7, 2)
+d8.add_edge( 5, 7, 5)
+d8.add_edge( 6, 7, 12)
+
+print "testeo A*"
+d = AEstrella( d8, 0, 7)
 print d.camino()
 
 

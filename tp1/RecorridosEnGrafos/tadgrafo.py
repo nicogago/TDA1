@@ -47,6 +47,9 @@ class Vert:
 
     def get_distancia(self):
         return self.distancia
+    
+    def get_padre(self):
+        return self.padre
 
 
 class Digraph:
