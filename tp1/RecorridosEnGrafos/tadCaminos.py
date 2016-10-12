@@ -59,43 +59,47 @@ class AEstrella(Caminos):
 	def __init__(self,g,vo,vd):
 		super(AEstrella, self).__init__(g,vo,vd)
 		abiertos = []
-		terna = [0, 0, vo] # [f(x), g(x), Id del vertice]
-		heappush(abiertos,(terna))
+		#terna = [0, 0, vo] # [f(x), g(x), Id del vertice]
+		unCamino = [vo]
+		par = [0,unCamino] #dejo f(x) como 0
+		heappush(abiertos,par)
 		final = False
 		padre = None
 		verticeActual = None
 
-		abiertos.append(terna)
 		while abiertos and not final:
-			print "balblabal"
-			padre = verticeActual
-			terna = heapq.heappop(abiertos)
-			verticeActual = terna[2]
-			g.get_V(verticeActual).set_padre(padre)
+			par = heapq.heappop(abiertos)
+			verticeActual = par[1][-1]
+			g.get_V(verticeActual).set_padre(padre) #???
 			if verticeActual != vd:
 				vecinos = g.adj(verticeActual)
-				ternaAGuardar = [0,0,0]
 				for v in vecinos:
+					parAGuardar = [None,None]
 					id = v.get_id()
-					ternaAGuardar[2] = id 
-					ternaAGuardar[1] = terna[1] + g.get_A(verticeActual, id).get_weight() #el g(x) anterior + el nuevo peso
-					ternaAGuardar[0] = ternaAGuardar[1] + heuristica(id, vd) # el nuevo g(x) + heuristica desde aca al fin
-					heappush(abiertos,(ternaAGuardar))
+					unCamino = par[1] + [id]
+					parAGuardar = [__f__(unCamino,vd,g),unCamino]
+					heappush(abiertos,parAGuardar)
 									
 			else:
 				final = True
-				g.get_V(verticeActual).set_padre(padre)
+				g.get_V(verticeActual).set_padre(padre)#???
+				
 
 		###ARMO EL RECORRIDO
-		while verticeActual != None:
-			print "holaaaa"
-			[verticeActual] + self.resultado
-			verticeActual = g.get_V(verticeActual).get_padre()
-			
+		self.resultado = par[1]
 		
 	
 	# realizado según http://stackoverflow.com/questions/5849667/a-search-algorithm
-	
+def __f__(camino, vd, g):
+	return __g__(camino, g) + __heuristica__(camino[-1],vd)
+
+def __g__(camino, g):
+	total = 0
+	for elem in range(0,len(camino)-1):
+		print camino[elem]
+		print camino[elem+1]
+		total = total + g.get_A(camino[elem], camino[elem+1]).get_weight() #sumo los pesos de las aristas
+	return total
 		
-def heuristica(v,vd):
+def __heuristica__(v,vd):
 	return 1
