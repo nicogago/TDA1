@@ -72,7 +72,7 @@ print
 print
 
 f = open('resultados', 'w')
-f.write('N\tTiempo promedio (ms)\n\n')
+f.write('N\tTiempo promedio [ms]\n\n')
 
 print "Se corren con conjuntos cuyo tamaño crece exponencialmente"
 print
