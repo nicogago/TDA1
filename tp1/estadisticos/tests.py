@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 from estadisticos import *
 
 ### TESTS ###
@@ -7,12 +8,17 @@ from estadisticos import *
 my_list = [4, 1, 5, 9, 12, 3, 0, 2, 7, 6]
 true_k  = [5, 2, 6, 9, 10, 4, 1, 3, 8, 7]
 for idx, k in enumerate(true_k):
-	assert fuerza_bruta1(my_list, idx, k)
+	assert fuerza_bruta_min_k(my_list, idx, k)
 
 my_list = [1, 1, 5, 12, 12, 5, 7, 2, 7, 6]
 true_k  = [1, 2, 4,  9, 10, 5, 7, 3, 8, 6]
 for idx, k in enumerate(true_k):
-    assert fuerza_bruta2(my_list, idx, k)
+    assert fuerza_bruta(my_list, idx, k)
+
+my_list  = [1, 1, 5, 12, 12, 5, 7, 2, 7, 6]
+sorted_l = [1, 1, 2, 5, 5, 6, 7, 7, 12, 12]
+for idx, i in enumerate(sorted_l):
+    assert k_fuerza_bruta(my_list, idx+1) == i
 
 ## ordenar_y_seleccionar
 my_list = [1, 1, 5, 12, 12, 5, 7, 2, 7, 6]
@@ -45,4 +51,4 @@ for idx, i in enumerate(sorted_l):
 my_list  = [4, 1, 5, 9, 12, 3, 0, 2, 7, 6]
 sorted_l = [0, 1, 2, 3, 4, 5, 6, 7, 9, 12]
 for idx, i in enumerate(sorted_l):
-    assert quickSelect(my_list, 0, len(my_list)-1,  idx+1) == i
+    assert k_quickselect(my_list,  idx+1) == i
