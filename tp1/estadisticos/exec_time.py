@@ -40,7 +40,7 @@ def imprimir_tiempos_y_promedio(func, lists, ks):
         t = medir_elapsed_time(func, a_list, ks[i])
         print 'Conj %d: %.1f ms' % (i, t)
         sum += t
-    promedio = sum / i
+    promedio = sum / (i + 1)
     print 'Tiempo promedio: %.1f ms' % (promedio)
     print
     return promedio
