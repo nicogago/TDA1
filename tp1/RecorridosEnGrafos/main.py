@@ -3,7 +3,6 @@
 
 from tadCaminos import *
 from constantes import *
-from constantes import *
 
 from tadgrafo import *
 from busqueda_heuristica import *
@@ -26,19 +25,19 @@ d4.add_edge( 2, 3, 7)
 print "aristas = " + str(d4.E())
 print "vertices = " + str(d4.V())
 
-print "testeo iter_edges()" 
+print "testeo iter_edges()"
 
 i = d4.iter_edges()
 for a in i:
     print a.get_weight()
-    
+
 print "testeo adj_e"
-i = d4.adj_e( 1) 
+i = d4.adj_e( 1)
 for a in i:
     print a.get_weight()
-    
+
 print "testeo adj"
-i = d4.adj( 1) 
+i = d4.adj( 1)
 for a in i:
     print a.get_id()
 
@@ -77,7 +76,7 @@ E=7"""
 
 print "3er grafo"
 d8 = Digraph(8)
-print "agrego aristas" 
+print "agrego aristas"
 d8.add_edge( 0, 1, 1)
 d8.add_edge( 0, 2, 2)
 d8.add_edge( 1, 3, 7)
@@ -92,5 +91,3 @@ d8.add_edge( 6, 7, 12)
 print "testeo A*"
 d = AEstrella( d8, 0, 7)
 print d.camino()
-
-
