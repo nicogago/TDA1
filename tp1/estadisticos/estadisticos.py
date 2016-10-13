@@ -60,8 +60,8 @@ def k_selecciones(conj, k):
     return conj[k-1]
 
 
-# Para heapificar
-def moveDown(conj, actual, last):
+# Para min-heapificar
+def moveDownMin(conj, actual, last):
     hijo = 2 * actual + 1
     while (hijo <= last):
         if (hijo < last and conj[hijo] > conj[hijo + 1]):
@@ -73,31 +73,50 @@ def moveDown(conj, actual, last):
         else:
             return
 
-
 def k_heapsort(conj, k):
     last = len(conj)
-    for i in xrange(0, k):
+    for i in xrange(1, k+1):
         last -= 1
-        #heapifico
+        # min-heapifico
         for j in xrange(last // 2, -1, -1):
-            moveDown(conj, j, last)
-        if i != (k-1):
+            moveDownMin(conj, j, last)
+        if i != k:
             conj[0], conj[last] = conj[last], conj[0]
     return conj[0]
 
 
-# k >= 1
+# Para max-heapificar
+def moveDownMax(conj, actual, last):
+    hijo = 2 * actual + 1
+    while (hijo <= last):
+        if (hijo < last and conj[hijo] < conj[hijo + 1]):
+            hijo += 1
+        if (conj[actual] < conj[hijo]):
+            conj[actual], conj[hijo] = conj[hijo], conj[actual]
+            actual = hijo
+            hijo = 2 * actual + 1
+        else:
+            return
+
+# Para heap de máximo
+def siftUpMax(conj, idx_actual):
+    if idx_actual == 0:
+        return
+    idx_padre = idx_actual // 2
+    if conj[idx_actual] > conj[idx_padre]:
+        conj[idx_padre], conj[idx_actual] = conj[idx_actual], conj[idx_padre]
+        siftUpMax(conj, idx_padre)
+
 def heapselect(conj, k):
-    last = len(conj) - 1
-    # heapifico
-    for i in xrange(last // 2, 0-1, -1):
-        moveDown(conj, i, last)
-    limit = last - k + 1
-    for i in xrange(last, limit, -1):
-        if (conj[0] < conj[i]):
-            conj[0], conj[i] = conj[i], conj[0]
-            moveDown(conj, 0, i - 1)
-    return conj[0]
+    maxHeap = []
+    for idx, i in enumerate(conj):
+        if (len(maxHeap) < k):
+            maxHeap.append(i)
+            siftUpMax(maxHeap, len(maxHeap)-1)
+        elif (i < maxHeap[0]):
+            maxHeap[0] = i
+            moveDownMax(maxHeap, 0, len(maxHeap)-1)
+    return maxHeap[0]
 
 
 ## QUICKSELECT
