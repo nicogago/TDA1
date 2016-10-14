@@ -21,7 +21,6 @@ def BFS(grafo,i,f):
 	while colaQ and not termine:
 	# extraemos el nodo u de la cola Q y exploramos todos sus nodos adyacentes
 		u = colaQ.pop(0)
-		print u.get_id()
 		adj_u = grafo.adj(u.get_id())
 		for elem in adj_u:
 			print elem.get_id()
@@ -38,8 +37,6 @@ def BFS(grafo,i,f):
 	if not colaQ:
 		return POSITIVE_INFINITY
 	else: return "Error, algo salio muy mal..."
-
-
 
 graph = Digraph(19)
 graph.add_edge( 0, 1)

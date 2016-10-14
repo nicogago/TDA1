@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 ###                          ###
 ###  ESTADISTICO DE ORDEN K  ###
 ###                          ###
@@ -5,7 +7,7 @@
 
 # En ambas formas, cand es el indice en conj del numero candidato
 # Asumiendo minimo k cuando hay repetidos
-def fuerza_bruta1(conj, cand, k):
+def fuerza_bruta_min_k(conj, cand, k):
     real_k = 1
     for i in conj:
         if (i < conj[cand]):
@@ -17,7 +19,7 @@ def fuerza_bruta1(conj, cand, k):
     return True
 
 # Sin esa restriccion
-def fuerza_bruta2(conj, cand, k):
+def fuerza_bruta(conj, cand, k):
     min_real_k = 1
     diff_max_k = 0
 
@@ -32,26 +34,34 @@ def fuerza_bruta2(conj, cand, k):
         return False
     return True
 
+# Devuelve el estadístico orden-k como el resto de las funciones
+def k_fuerza_bruta(conj, k):
+    for idx_cand, cand in enumerate(conj):
+        if fuerza_bruta(conj, idx_cand, k):
+            return cand
 
+
+# Usa el sort de Python
 def ordenar_y_seleccionar(conj, k):
     conj.sort()
     return conj[k-1]
 
+
 ## K SELECCIONES
 # k > 0
-def k_selecciones(array, k):
+def k_selecciones(conj, k):
     for i in range(0, k):
         min = i
-        for j in range(i+1,len(array)):
-            if array[j] < array[min]:
+        for j in range(i+1,len(conj)):
+            if conj[j] < conj[min]:
                 min = j
         if i != min:
-            array[i] , array[min] = array[min] , array[i]
-    return array[k-1]
+            conj[i] , conj[min] = conj[min] , conj[i]
+    return conj[k-1]
 
 
-# Para heapificar
-def moveDown(conj, actual, last):
+# Para min-heapificar
+def moveDownMin(conj, actual, last):
     hijo = 2 * actual + 1
     while (hijo <= last):
         if (hijo < last and conj[hijo] > conj[hijo + 1]):
@@ -63,56 +73,80 @@ def moveDown(conj, actual, last):
         else:
             return
 
-
-def k_heapsort(array, k):
-    last = len(array)
-    for i in xrange(0, k):
+def k_heapsort(conj, k):
+    last = len(conj)
+    for i in xrange(1, k+1):
         last -= 1
-        #heapifico
+        # min-heapifico
         for j in xrange(last // 2, -1, -1):
-            moveDown(array, j, last)
-        if i != (k-1):
-            array[0], array[last] = array[last], array[0]
-    return array[0]
-
-
-# k >= 1
-def heapselect(conj, k):
-    last = len(conj) - 1
-    # heapifico
-    for i in xrange(last // 2, 0-1, -1):
-        moveDown(conj, i, last)
-    limit = last - k + 1
-    for i in xrange(last, limit, -1):
-        if (conj[0] < conj[i]):
-            conj[0], conj[i] = conj[i], conj[0]
-            moveDown(conj, 0, i - 1)
+            moveDownMin(conj, j, last)
+        if i != k:
+            conj[0], conj[last] = conj[last], conj[0]
     return conj[0]
 
+
+# Para max-heapificar
+def moveDownMax(conj, actual, last):
+    hijo = 2 * actual + 1
+    while (hijo <= last):
+        if (hijo < last and conj[hijo] < conj[hijo + 1]):
+            hijo += 1
+        if (conj[actual] < conj[hijo]):
+            conj[actual], conj[hijo] = conj[hijo], conj[actual]
+            actual = hijo
+            hijo = 2 * actual + 1
+        else:
+            return
+
+# Para heap de máximo
+def siftUpMax(conj, idx_actual):
+    if idx_actual == 0:
+        return
+    idx_padre = idx_actual // 2
+    if conj[idx_actual] > conj[idx_padre]:
+        conj[idx_padre], conj[idx_actual] = conj[idx_actual], conj[idx_padre]
+        siftUpMax(conj, idx_padre)
+
+def heapselect(conj, k):
+    maxHeap = []
+    for idx, i in enumerate(conj):
+        if (len(maxHeap) < k):
+            maxHeap.append(i)
+            siftUpMax(maxHeap, len(maxHeap)-1)
+        elif (i < maxHeap[0]):
+            maxHeap[0] = i
+            moveDownMax(maxHeap, 0, len(maxHeap)-1)
+    return maxHeap[0]
+
+
 ## QUICKSELECT
+# k > 0
 # Funcion para encontrar pivote para luego particionar el arreglo
-def particionar(array, ini, fin, k):
+def particionar(conj, ini, fin):
     i = ini - 1
     for j in range(ini, fin):
-        if (array[j] < array[fin]):
+        if (conj[j] < conj[fin]):
             i += 1
             if (i != j):
-                array[i], array[j] = array[j], array[i]
+                conj[i], conj[j] = conj[j], conj[i]
     # i+1 se va a convertir en el pivote (swap)
-    array[i+1], array[fin] = array[fin], array[i+1]
+    conj[i+1], conj[fin] = conj[fin], conj[i+1]
     return i + 1
 
-def quickSelect(array, ini, fin, k):
+def quickselect(conj, ini, fin, k):
+    k_real = k - 1
     if (ini == fin):
-        return array[k]
-    # descartamos el subarray que no contiene al elemento k
-    pivote = particionar(array, ini, fin, k)
-#    print array
-#    print "pivote: ", pivote
-    if (k == pivote):
-        return array[k]
-    if (k > pivote):
+        return conj[k_real]
+    # descartamos el subconj que no contiene al elemento k
+    pivote = particionar(conj, ini, fin)
+    if (k_real == pivote):
+        return conj[k_real]
+    if (k_real > pivote):
         ini = pivote + 1
     else:
         fin = pivote - 1
-    return quickSelect(array, ini, fin, k)
+    return quickselect(conj, ini, fin, k)
+
+# Devuelve el estadístico orden-k como el resto de las funciones
+def k_quickselect(conj, k):
+    return quickselect(conj, 0, len(conj)-1, k)
