@@ -44,13 +44,13 @@ def imprimir_tiempos_y_promedio(func, lists, ks):
     print
     return promedio
 
-def imprimir_tiempo_promedio(func, lists, ks):
+def imprimir_tiempo_promedio(func, lists):
     sum = 0
     # Corre para cada list en lists y promedia
     for i, a_list in enumerate(lists):
-        sum += medir_elapsed_time(func, a_list, ks[i], 5)
+        sum += medir_elapsed_time(func, a_list, len(a_list) // 2 + 1, 5)
     promedio = sum / (i + 1)
-    print 'N=%d\t%.3f ms\t(total: %.6f s)' % (len(lists[0]), promedio, sum/1000)
+    print 'N=%d     \t%.3f ms\t(total: %.6f s)' % (len(lists[0]), promedio, sum/1000)
     return promedio
 
 
@@ -59,32 +59,33 @@ print "Se miden los tiempos de ejecución para obtener"
 print "el estadístico de orden k con distintos algoritmos"
 print
 
-lists = random_lists(16, 5)
-ks = np.random.randint(1, 17, size=5)
-print "Conjuntos rándom de 16 int y k rándom para buscarles:"
-for i, a_list in enumerate(lists):
-   print "Conjunto", (i+1), ":", a_list, "con k =", ks[i]
-print
-
-for func in funciones:
-   imprimir_tiempos_y_promedio(func, lists, ks)
-print
-print
+# lists = random_lists(16, 5)
+# ks = np.random.randint(1, 17, size=5)
+# print "Conjuntos rándom de 16 int y k rándom para buscarles:"
+# for i, a_list in enumerate(lists):
+#    print "Conjunto", (i+1), ":", a_list, "con k =", ks[i]
+# print
+#
+# for func in funciones:
+#    imprimir_tiempos_y_promedio(func, lists, ks)
+# print
+# print
 
 f = open('resultados', 'w')
 f.write('N\tTiempo promedio [ms]\n\n')
 
-print "Se corren con conjuntos cuyo tamaño crece exponencialmente"
-print
+# print "Se corren con conjuntos cuyo tamaño crece exponencialmente"
+# print
 for func in funciones:
     print func.__name__
     f.write('%r\n' % (func.__name__))
-    for exp in xrange(0, 5):
+    for exp in xrange(0, 7):
         n = 10**exp
         lists = random_lists(n, 5)
-        ks = np.random.randint(1, n+1, size=5)
-        res = imprimir_tiempo_promedio(func, lists, ks)
-        f.write('%d\t%.4f\n' % (n, res))
+        res = imprimir_tiempo_promedio(func, lists)
+        f.write('%d     \t%.4f\n' % (n, res))
+        if res > 1000:
+            break
     print
     f.write('\n')
 
