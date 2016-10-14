@@ -143,3 +143,10 @@ gbfs2.add_edge( 10, 16)
 
 ads = BFS(gbfs2,0,16)
 print "distancia al nodo final = "+str(ads)
+
+
+asd = armarResultado(gbfs1,6)
+print asd
+
+asd = armarResultado(gbfs2,16)
+print asd

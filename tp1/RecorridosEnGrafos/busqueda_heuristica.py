@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 from tadgrafo import *
 
-
 def __heuristica__(grafo,elem):
 	adj_elem = grafo.adj(elem.get_id())
 	cant = 1

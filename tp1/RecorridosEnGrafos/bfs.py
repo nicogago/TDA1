@@ -2,6 +2,15 @@
 # -*- coding: utf-8 -*-
 from tadgrafo import *
 
+def armarResultado(grafo,vd):
+	resultado = [vd]
+	padre = grafo.get_V(vd).get_padre()
+	while padre != None:
+		resultado = [padre.get_id()] + resultado
+		padre = grafo.get_V(padre.get_id()).get_padre()
+	return resultado
+
+
 def BFS(grafo,inf,fin): 
 	# recorremos todos los vértices del grafo inicializándolos a NO_VISITADO,
 	# distancia INFINITA y padre de cada nodo NULL
@@ -39,3 +48,4 @@ def BFS(grafo,inf,fin):
 		return POSITIVE_INFINITY
 	else: return "Error, algo salio muy mal..."
 
+		
