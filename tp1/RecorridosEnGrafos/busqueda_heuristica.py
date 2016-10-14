@@ -11,9 +11,11 @@ def __heuristica__(grafo,elem):
 			cant = cant + 1        
 	return cant
 
-def BFS_heuristica(grafo,i,f): 
+def BFS_heuristica(grafo,inf,fin): 
 	# recorremos todos los vértices del grafo inicializándolos a NO_VISITADO,
 	# distancia INFINITA y padre de cada nodo NULL
+	i = grafo.get_V(inf)
+	f = grafo.get_V(fin)
 
 	grafo.sacar_visitados()
 	grafo.poner_distancias_inf()
@@ -86,17 +88,6 @@ class Cola_prioridad:
 		self.lista.pop(ind)
 		return elem
 
-graph = Digraph(9)
-graph.add_edge( 0, 1)
-graph.add_edge( 0, 2)
-graph.add_edge( 0, 3)
-graph.add_edge( 1, 4)
-graph.add_edge( 1, 5)
-graph.add_edge( 2, 6)
-graph.add_edge( 3, 7)
-graph.add_edge( 3, 8)
-
-ads = BFS_heuristica(graph,graph.get_V(0),graph.get_V(6))
 
 """
 graph = Digraph(19)
