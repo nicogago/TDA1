@@ -10,7 +10,7 @@ class Caminos():
 	__metaclass__ = ABCMeta
 
 	@abstractmethod
-	def __init__(self, g,vo,vd): 
+	def __init__(self, g,vo,vd, heuristica = None): 
 		self.resultado = []
 		self.g = g
 		pass
@@ -36,8 +36,8 @@ class Caminos():
 
 class Dijkstra(Caminos):
 
-	def __init__(self, g,vo,vd): 
-		super(Dijkstra, self).__init__(g,vo,vd)
+	def __init__(self, g,vo,vd,heuristica = None): 
+		super(Dijkstra, self).__init__(g,vo,vd,heuristica = None)
 		heap = []
 		heappush(heap,(0,vo))
 
@@ -66,8 +66,8 @@ class Dijkstra(Caminos):
 	
 class AEstrella(Caminos):
 	
-	def __init__(self,g,vo,vd):
-		super(AEstrella, self).__init__(g,vo,vd)
+	def __init__(self,g,vo,vd,heuristica = None):
+		super(AEstrella, self).__init__(g,vo,vd,heuristica = None)
 		abiertos = []
 		unCamino = [vo]
 		par = [0,unCamino] #dejo f(x) como 0
@@ -86,8 +86,8 @@ class AEstrella(Caminos):
 					if (id != idVerticeActual):
 						parAGuardar = [None,None]
 						unCamino = par[1] + [id]
-						parAGuardar = [__f__(unCamino,vd,g),unCamino]
-						g.get_V(id).set_padre(idVerticeActual) #???
+						parAGuardar = [__f__(unCamino,vd,g,heuristica),unCamino]
+						g.get_V(id).set_padre(idVerticeActual)
 						heappush(abiertos,parAGuardar)	
 														
 			else:
@@ -97,8 +97,10 @@ class AEstrella(Caminos):
 		if final:
 			self.resultado = par[1]
 	
-def __f__(camino, vd, g):
-	return __g__(camino, g) + __heuristica__(g,camino[-1])
+
+
+def __f__(camino, vd, g,heuristica):
+	return __g__(camino, g) + heuristica(g,camino[-1])
 
 def __g__(camino, g):
 	total = 0
@@ -114,30 +116,6 @@ def __heuristica__(grafo,elem):
 			cant = cant + 1        
 	return cant
 
-def __mockHeuristica__(g,v):
-	#heuristica para probar el ejemplo de http://stackoverflow.com/questions/5849667/a-search-algorithm 
-	if v == 1: return 5
-	if v == 2: return 6
-	if v == 3: return 8
-	if v == 4: return 5
-	if v == 5: return 4
-	if v == 6: return 15
-	return 0
 
-def __mock2Heuristica__(g,v):
-	#heuristica para probar el ejemplo de http://stackoverflow.com/questions/20162735/a-algorithm-on-a-directed-graph?noredirect=1&lq=1
-	if v == 1: return 7
-	if v == 2: return 0
-	if v == 3: return 11
-	if v == 4: return 5
-	if v == 5: return 1
-	if v == 0: return 8
-	return 0
-
-def __estaEnLista__(lista,v):
-	for i in range(0,len(lista)):
-		if lista[i][1] == v:
-			return True
-	return False
 
 	
