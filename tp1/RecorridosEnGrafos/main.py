@@ -28,9 +28,15 @@ print "vertices = " + str(d4.V())
 print "testeo Dijkstra"
 d = Dijkstra( d4, 0, 3)
 print d.camino()
+
+print d.distancia(0)
 print d.distancia(1)
 print d.distancia(2)
 print d.distancia(3)
+print d.visitado(0)
+print d.visitado(1)
+print d.visitado(2)
+print d.visitado(3)
 
 print "otro grafo"
 d6 = Digraph(6)

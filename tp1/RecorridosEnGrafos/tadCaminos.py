@@ -16,13 +16,13 @@ class Caminos():
 		pass
 
 	def distancia(self, v):
+		if v not in self.resultado: return POSITIVE_INFINITY
 		total = 0
-		for i in range(0,len(self.resultado)-1):
+		for i in range(0,len(self.resultado)):
 			if self.resultado[i] == v:
 				return total
 			total = total+self.g.get_A(self.resultado[i],self.resultado[i+1]).get_weight()
-		return POSITIVE_INFINITY
-
+			
 	def visitado(self, v):
 		for i in range(0,len(self.resultado)):
 			if self.resultado[i] == v:
