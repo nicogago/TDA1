@@ -10,21 +10,22 @@ class Caminos():
 	__metaclass__ = ABCMeta
 
 	@abstractmethod
-	def __init__(self, g,vo,vd): 
+	def __init__(self, g,vo,vd, heuristica = None): 
 		self.resultado = []
+		self.g = g
 		pass
 
 	def distancia(self, v):
+		if v not in self.resultado: return POSITIVE_INFINITY
 		total = 0
 		for i in range(0,len(self.resultado)):
-			total = total+self.resultado[i][0]
-			if self.resultado[i][1] == v:
+			if self.resultado[i] == v:
 				return total
-		return POSITIVE_INFINITY
-
+			total = total+self.g.get_A(self.resultado[i],self.resultado[i+1]).get_weight()
+			
 	def visitado(self, v):
 		for i in range(0,len(self.resultado)):
-			if self.resultado[i][1] == v:
+			if self.resultado[i] == v:
 				return True
 		return False
 		
@@ -35,31 +36,39 @@ class Caminos():
 
 class Dijkstra(Caminos):
 
-	def __init__(self, g,vo,vd): 
-		super(Dijkstra, self).__init__(g,vo,vd)
+	def __init__(self, g,vo,vd,heuristica = None): 
+		super(Dijkstra, self).__init__(g,vo,vd,heuristica = None)
 		heap = []
 		heappush(heap,(0,vo))
 
 		while heap and not g.get_V(vd).fue_visitado():
 			verticeVisitado = heapq.heappop(heap)
 			g.get_V(verticeVisitado[1]).visitar()
-			self.resultado.append(verticeVisitado)
 			verticesAdyacentes = g.adj(verticeVisitado[1])
 			
 			for vertice in verticesAdyacentes:
 				pesoDelVisitadoAlVertice = g.get_A(verticeVisitado[1], vertice.get_id()).get_weight()
 				if ( not vertice.fue_visitado() ) and ( vertice.get_distancia() > pesoDelVisitadoAlVertice):
 					vertice.set_distancia(pesoDelVisitadoAlVertice)
-					vertice.set_padre(verticeVisitado)
+					vertice.set_padre(verticeVisitado[1])
 					heappush(heap,(pesoDelVisitadoAlVertice,vertice.get_id()))
-					
+		self.armarResultado(vd)
+	
+	def armarResultado(self,vd):
+		self.resultado = [vd]
+		padre = self.g.get_V(vd).get_padre()
+		while padre != None:
+			self.resultado = [padre] + self.resultado
+			padre = self.g.get_V(padre).get_padre()
+			
+		
+		
 	
 class AEstrella(Caminos):
-
-	def __init__(self,g,vo,vd):
-		super(AEstrella, self).__init__(g,vo,vd)
+	
+	def __init__(self,g,vo,vd,heuristica = None):
+		super(AEstrella, self).__init__(g,vo,vd,heuristica = None)
 		abiertos = []
-		#terna = [0, 0, vo] # [f(x), g(x), Id del vertice]
 		unCamino = [vo]
 		par = [0,unCamino] #dejo f(x) como 0
 		heappush(abiertos,par)
@@ -69,37 +78,44 @@ class AEstrella(Caminos):
 
 		while abiertos and not final:
 			par = heapq.heappop(abiertos)
-			verticeActual = par[1][-1]
-			g.get_V(verticeActual).set_padre(padre) #???
-			if verticeActual != vd:
-				vecinos = g.adj(verticeActual)
+			idVerticeActual = par[1][-1]
+			if idVerticeActual != vd:
+				vecinos = g.adj(idVerticeActual)
 				for v in vecinos:
-					parAGuardar = [None,None]
 					id = v.get_id()
-					unCamino = par[1] + [id]
-					parAGuardar = [__f__(unCamino,vd,g),unCamino]
-					heappush(abiertos,parAGuardar)
-									
+					if (id != idVerticeActual):
+						parAGuardar = [None,None]
+						unCamino = par[1] + [id]
+						parAGuardar = [__f__(unCamino,vd,g,heuristica),unCamino]
+						g.get_V(id).set_padre(idVerticeActual)
+						heappush(abiertos,parAGuardar)	
+														
 			else:
-				final = True
-				g.get_V(verticeActual).set_padre(padre)#???
-				
+				final = True				
 
 		###ARMO EL RECORRIDO
-		self.resultado = par[1]
-		
+		if final:
+			self.resultado = par[1]
 	
-	# realizado según http://stackoverflow.com/questions/5849667/a-search-algorithm
-def __f__(camino, vd, g):
-	return __g__(camino, g) + __heuristica__(camino[-1],vd)
+
+
+def __f__(camino, vd, g,heuristica):
+	return __g__(camino, g) + heuristica(g,camino[-1])
 
 def __g__(camino, g):
 	total = 0
 	for elem in range(0,len(camino)-1):
-		print camino[elem]
-		print camino[elem+1]
 		total = total + g.get_A(camino[elem], camino[elem+1]).get_weight() #sumo los pesos de las aristas
 	return total
 		
-def __heuristica__(v,vd):
-	return 1
+def __heuristica__(grafo,elem):
+	adj_elem = grafo.adj(elem)
+	cant = 1
+	for elem in adj_elem:
+		if(not elem.fue_visitado()):
+			cant = cant + 1        
+	return cant
+
+
+
+	

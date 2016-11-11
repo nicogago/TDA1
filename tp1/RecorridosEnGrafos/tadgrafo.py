@@ -143,13 +143,6 @@ class Digraph:
         for i in range(0,len(g.vertices)):
             g.vertices[i].set_padre_vacio()
 
-"""    def get_weight(g,i,f):  # @NoSelf
-        for i in range(0,g.cant_aristas):
-            if g.aristas[i].get_from() == v : 
-                aristas_incidentes_de_v[cant_aristas_incidentes_desde_v] = g.vertices[g.aristas[i].get_to()]
-                cant_aristas_incidentes_desde_v = cant_aristas_incidentes_desde_v + 1
-   """ 
-
 class Arista:
     """Arista de un grafo.
       """
@@ -168,46 +161,3 @@ class Arista:
     def get_to (self):
         return self.dst
     
-
-
-
-
-#FUNCIONES DE FER
-
-"""
-def heuristica (g,i,f,peso = 0):
-  u = random.random()        # Random float x, 0.0 <= x < 1.0     
-  vecinos = i.get_neighbors() 
-  if f in i.get_neighbors().keys():
-    return (get_weight(g,i,f) + peso)
-  else:
-    if u < 0.75 :
-      menor = get_nodo_menor_peso(g,i,vecinos)
-      peso = peso + get_weight(menor)
-      return heuristica(g,menor,f,peso)
-    else:
-      nodo = get_random_nodo(vecinos)
-      peso = peso + get_weight(nodo)
-      return heuristica(g,nodo,f,peso)
-
-def get_nodo_menor_peso(g,i,vect):
-  peso = None 
-  for x in vect:
-    if peso == None : 
-      peso = dar_peso(g,i,x)
-    else:
-      aux_peso = dar_peso(g,i,x)
-      if (peso > aux_peso):
-        peso = aux_peso
-  return peso
-
-def dar_peso(g,i,f):
-  for i in range(0,cant_aristas):
-    if g.aristas[i].get_from() == i and g.aristas[i].get_to() == f: 
-      return g.aristas[i].get_weight()
-
-def get_random_nodo(vecinos):
-  cant_vecinos = len(vecinos)
-  num_random = randint(0,cant_vecinos)
-  return vecinos[num_random]
-"""

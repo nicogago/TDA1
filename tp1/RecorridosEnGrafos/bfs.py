@@ -2,9 +2,21 @@
 # -*- coding: utf-8 -*-
 from tadgrafo import *
 
-def BFS(grafo,i,f): 
+def armarResultado(grafo,vd):
+	resultado = [vd]
+	padre = grafo.get_V(vd).get_padre()
+	while padre != None:
+		resultado = [padre.get_id()] + resultado
+		padre = grafo.get_V(padre.get_id()).get_padre()
+	return resultado
+
+
+def BFS(grafo,inf,fin): 
 	# recorremos todos los vértices del grafo inicializándolos a NO_VISITADO,
 	# distancia INFINITA y padre de cada nodo NULL
+	i = grafo.get_V(inf)
+	f = grafo.get_V(fin)
+
 	grafo.sacar_visitados()
 	grafo.poner_distancias_inf()
 	grafo.eliminar_padres()
@@ -21,7 +33,6 @@ def BFS(grafo,i,f):
 	while colaQ and not termine:
 	# extraemos el nodo u de la cola Q y exploramos todos sus nodos adyacentes
 		u = colaQ.pop(0)
-		print u.get_id()
 		adj_u = grafo.adj(u.get_id())
 		for v in adj_u:
 			if not v.fue_visitado():
@@ -37,25 +48,4 @@ def BFS(grafo,i,f):
 		return POSITIVE_INFINITY
 	else: return "Error, algo salio muy mal..."
 
-
-
-graph = Digraph(19)
-graph.add_edge( 0, 1, 1)
-graph.add_edge( 0, 2, 2)
-graph.add_edge( 0, 3, 3)
-graph.add_edge( 1, 4, 4)
-graph.add_edge( 1, 5, 5)
-graph.add_edge( 2, 6, 6)
-graph.add_edge( 2, 7, 7)
-graph.add_edge( 2, 8, 8)
-graph.add_edge( 3, 9, 9)
-graph.add_edge( 4, 14, 10)
-graph.add_edge( 5, 15, 11)
-graph.add_edge( 6, 11, 12)
-graph.add_edge( 7, 12, 13)
-graph.add_edge( 8, 13, 14)
-graph.add_edge( 9, 10, 15)
-graph.add_edge( 10, 16, 16)
-
-ads = BFS(graph,graph.get_V(0),graph.get_V(18))
-print ads
+		

@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 from tadgrafo import *
 
-
 def __heuristica__(grafo,elem):
 	adj_elem = grafo.adj(elem.get_id())
 	cant = 1
@@ -11,9 +10,11 @@ def __heuristica__(grafo,elem):
 			cant = cant + 1        
 	return cant
 
-def BFS_heuristica(grafo,i,f): 
+def BFS_heuristica(grafo,inf,fin): 
 	# recorremos todos los vértices del grafo inicializándolos a NO_VISITADO,
 	# distancia INFINITA y padre de cada nodo NULL
+	i = grafo.get_V(inf)
+	f = grafo.get_V(fin)
 
 	grafo.sacar_visitados()
 	grafo.poner_distancias_inf()
@@ -31,7 +32,6 @@ def BFS_heuristica(grafo,i,f):
 	while cola and not termine:
 		# extraemos el nodo u de la cola Q y exploramos todos sus nodos adyacentes
 		u = cola.pop(0)
-		print u.get_id()
 		adj_u = grafo.adj(u.get_id())
 		cola_hijos_prior = Cola_prioridad()
 		for v in adj_u:
@@ -88,6 +88,7 @@ class Cola_prioridad:
 		return elem
 
 
+"""
 graph = Digraph(19)
 graph.add_edge( 0, 1, 1)
 graph.add_edge( 0, 2, 2)
@@ -107,4 +108,4 @@ graph.add_edge( 9, 10, 15)
 graph.add_edge( 10, 16, 16)
 
 ads = BFS_heuristica(graph,graph.get_V(0),graph.get_V(18))
-print ads
+"""
