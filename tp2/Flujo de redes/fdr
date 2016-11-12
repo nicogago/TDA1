@@ -3,26 +3,38 @@
 
 archivo = open("archivo.txt")
 n = archivo.readline()
-print n.rstrip('\n')
+n = n.rstrip('\n')
+n = int(n)
+print n
 m = archivo.readline()
-print m.rstrip('\n')
-cn = []
-gn = []
-cambio = False
-linea = archivo.readline()
-while linea != '':
-	numeros = linea.split(" ")
-	if len(numeros) > 1:
-		cambio = True
-	nuevaLinea = []    
-	for elem in numeros:
-		nuevaLinea.append(elem.rstrip('\n'))
-	if cambio:
-		gn.append(nuevaLinea)
-	else:
-		cn.append(nuevaLinea)
-	linea = archivo.readline()    
-print cn
-print gn 
-archivo.close()
+m = m.rstrip('\n')
+m = int(m)
+print m
+costo_areas = {}
+ganancia_req = []
 
+linea = archivo.readline()
+i = 0
+while i < n:
+	numeros = linea.split(" ")
+	nuevaLinea = []	 
+	for elem in numeros:
+		nuevaLinea.append(int(elem.rstrip('\n')))
+	costo_areas[i+1] = nuevaLinea
+	linea = archivo.readline()
+	i = i + 1
+print costo_areas
+
+i = 0
+while i < m:
+	numeros = linea.split(" ")
+	nuevaLinea = []	 
+	for elem in numeros:
+		nuevaLinea.append(int(elem.rstrip('\n')))
+	ganancia_req.append(nuevaLinea)
+	linea = archivo.readline()
+	i = i + 1
+print ganancia_req
+
+
+archivo.close()
