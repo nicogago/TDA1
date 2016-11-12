@@ -10,6 +10,9 @@ class Proyecto:
     def contratar (self):
         self.realizar_proyecto = True
 
+    def no_contratar(self):
+        self.realizar_proyecto = False    
+
     def fue_contratado(self):
         return self.realizar_proyecto
 

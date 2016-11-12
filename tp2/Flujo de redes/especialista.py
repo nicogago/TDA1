@@ -12,5 +12,8 @@ class Especialista:
     def contratar(self):
         self.fue_contratado = True
 
+    def no_contratar(self):
+        self.fue_contratado = False
+
     def tiene_trabajo(self):
         return self.fue_contratado

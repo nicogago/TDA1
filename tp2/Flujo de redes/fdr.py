@@ -69,3 +69,27 @@ for proy in ganancia_req:
 	print proy.get_areas_requeridas()
 """
 
+# Se define la ganancia de una desicion tomada
+
+def ganancia():
+	sueldos_especialistas = 0
+	for area in costo_areas:
+		esp = costo_areas[area]
+		if esp.tiene_trabajo():
+			sueldos_especialistas = sueldos_especialistas + esp.get_sueldo_especialista()
+	ganancia_proy = 0
+	print sueldos_especialistas
+	for proy in ganancia_req:
+		proy = ganancia_req[proy]
+		if proy.fue_contratado():
+			ganancia_proy = ganancia_proy + proy.get_ganancia()
+	return (ganancia_proy - sueldos_especialistas)
+
+# prueba de la desicion tomada
+
+"""
+costo_areas[3].contratar()
+ganancia_req[2].contratar()
+print ganancia()
+"""
+
