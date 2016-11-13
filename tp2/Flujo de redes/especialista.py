@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 
 class Especialista:
-    def __init__(e,sueldo):
-        e.costo = sueldo  
-        e.fue_contratado = False
+    def __init__(self, sueldo):
+        self.costo = sueldo  
+        self.fue_contratado = False
     
-    def get_sueldo_especialista (self):
+    def get_sueldo_especialista(self):
         return self.costo
     
     def contratar(self):

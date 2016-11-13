@@ -21,6 +21,9 @@ class Vert:
     def get_id(self):
         return self.id
 
+    def set_id(self,id):
+        self.id = id
+
     def get_weight (self, dst):
         return self.vecinos[dst].get_weight()
 
@@ -142,6 +145,12 @@ class Digraph:
     def eliminar_padres(g): # @NoSelf
         for i in range(0,len(g.vertices)):
             g.vertices[i].set_padre_vacio()
+    
+    def changeNames(self,nombres):
+        if (len(nombres) <> len(self.vertices)):
+            return False
+        for i in self.vertices:
+            self.vertices[i].set_id(nombres[i])
 
 class Arista:
     """Arista de un grafo.

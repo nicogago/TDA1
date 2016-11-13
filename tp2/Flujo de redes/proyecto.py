@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 
 class Proyecto:
-    def __init__(p,ganancia,areas_requeridas):  
-        p.ganancia = ganancia
-        p.areas_requeridas = areas_requeridas
-        p.realizar_proyecto = False
+    def __init__(self, ganancia,areas_requeridas):  
+        self.ganancia = ganancia
+        self.areas_requeridas = areas_requeridas
+        self.realizar_proyecto = False
 
     def contratar (self):
         self.realizar_proyecto = True
