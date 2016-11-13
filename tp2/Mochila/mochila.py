@@ -3,6 +3,7 @@
 ###                          ###
 ###  Problema de la mochila  ###
 ###                          ###
+import sys
 import csv
 import time
 from os import listdir
@@ -38,8 +39,8 @@ def knapsack(N, W):
     return M[N][W]
 
 
-dirname = "smallcoeff_pisinger"
-# dirname = "hardinstances_pisinger"
+#dirname = "smallcoeff_pisinger"
+dirname = "hardinstances_pisinger"
 
 files = [f for f in listdir(dirname) if isfile(join(dirname, f))]
 for filename in files:
@@ -49,6 +50,7 @@ for filename in files:
     with open(join(dirname, filename)) as csvfile:
         print "--------------"
         print filename
+        print
         reader = csv.reader(csvfile, delimiter=' ')
         seguir = True
 
@@ -71,7 +73,8 @@ for filename in files:
                     xl.append(xi)
                 reader.next()  # Ignora línea vacía tras cada test
 
-                print test_name, '\t', "size(M) =", (N+1)*(W+1), '\t',
+                print test_name, '\t', "N*W =", (N+1) * (W+1), "\t ",
+                sys.stdout.flush()
                 start = time.clock()
 
                 k = knapsack(N, W)
@@ -83,7 +86,8 @@ for filename in files:
                     print k, "!=", z, "!!!"
                     assert k == z
 
-                print elapsed, "s\t(vs", t, "s)"
+                print elapsed, "s\t(vs", t, "s)\t",
+                print "N*W / t =", (N+1) * (W+1) / elapsed
 
         except StopIteration:
             print "--- passed ---"
