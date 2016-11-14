@@ -159,6 +159,9 @@ class Arista:
     def get_weight (self):
         return self.weight
     
+    def set_weight(self,weight):
+        self.weight = weight
+        
     def get_from (self):
         return self.src
     
