@@ -146,11 +146,6 @@ class Digraph:
         for i in range(0,len(g.vertices)):
             g.vertices[i].set_padre_vacio()
     
-    def changeNames(self,nombres):
-        if (len(nombres) <> len(self.vertices)):
-            return False
-        for i in self.vertices:
-            self.vertices[i].set_id(nombres[i])
 
 class Arista:
     """Arista de un grafo.

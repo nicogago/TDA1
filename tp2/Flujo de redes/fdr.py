@@ -52,35 +52,53 @@ def procesoArchivo():
 	archivo.close()
 
 def inicializoGrafo():
-	
-	"""	
+#el tadgrafo se toma como un modulo cerrado, dada su implementación, y debido a la necesidad de utilizar nombres para
+# esclarecer el asunto, se creara un diccionario nodos, con clave = nombre y valor = numeroDeNodo 	
 	grafo = Digraph(2+len(costo_areas)+len(ganancia_req))
 	nodos = {} 
-	nodos[0] = "s"
+	nodos["s"] = 0
+	nodos["t"] = grafo.V()-1
 	for i in range(0,len(ganancia_req)):
-		nombres.append("proyecto"+ str(i+1))
-		nodos[i]
+		nodos["proyecto"+ str(i+1)] = i+1
 		grafo.add_edge( 0, i+1, ganancia_req[i].get_ganancia())
 	for i in range(0,len(costo_areas)):
-		nombres.append("especialista" + str(i+1))
-		grafo.add_edge( i+len(ganancia_req)+1, grafo.V()-1, costo_areas[i].get_sueldo_especialista())
-	nombres.append("t")
-	grafo.changeNames(nombres)
+		numeroDeNodo = i+len(ganancia_req)+1
+		nodos["especialista" + str(i+1)] = numeroDeNodo
+		grafo.add_edge( numeroDeNodo, nodos["t"], costo_areas[i].get_sueldo_especialista())
 	#creo las aristas entre los proyectos y los especialistas
 	gananciaMaxima = 0
 	for i in ganancia_req:
 		gananciaMaxima = gananciaMaxima + i.get_ganancia()
 	
-	for i in ganancia_req:
-		areas_requeridas = i.get_areas_requeridas() 
-		for j in areas_requeridas:
+	for i in range(0,len(ganancia_req)):
+		areas_requeridas = ganancia_req[i].get_areas_requeridas() 
+		for j in range(0,len(areas_requeridas)):
 			#agrego la gananciaMaxima + 1 para simular infinito
-			aaa="proyecto"+str(i)
-			bbb= gananciaMaxima +1
-			grafo.add_edge(aaa, "especialista"+areas_requeridas[j],str(bbb))
-	"""	
+			proyecto = str("proyecto") + str(i+1)
+			especialista = "especialista"+ str(j+1)
+			peso = gananciaMaxima +1
+			grafo.add_edge(nodos[proyecto], nodos[especialista], peso)
+	
+	#prueba
+	print grafo.V()
+	print grafo.E()
+	print "aristas de s"
+	for i in grafo.adj_e(nodos["s"]):
+		print i.get_weight()
+	print "aristas de t"
+	for i in grafo.adj_e(nodos["t"]):
+		print i.get_weight()
+	for j in range(1,3):
+		print "arista de proyecto"+str(j)
+		for i in grafo.adj_e(nodos["proyecto" + str(j)]):
+			print i.get_weight()
 
+	for j in range(1,4):
+		print "arista de especialista"+str(j)
+		for i in grafo.adj_e(nodos["especialista" + str(j)]):
+			print i.get_weight()
 
+	
 # Se imprimen los seteos inicializados, prueba.
 """
 key_costo_areas = costo_areas.keys()
