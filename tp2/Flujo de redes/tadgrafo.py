@@ -101,13 +101,14 @@ class Digraph:
         return g.vertices[v].get_neighbors().keys()
 
 
-    def add_edge(g, u, v, weight=0):    # @NoSelf
+    def add_edge(g, u, v, weight=0, weight_reverse =0):    # @NoSelf
         """Añade una arista al grafo.
         """
         g.vertices[u].add_neighbor(g.vertices[v],weight)
         new_edge = Arista(u,v,weight)
+        new_edge_reverse = Arista(v,u,weight_reverse)
         g.aristas.append(new_edge)
-
+        g.aristas.append(new_edge_reverse)
 
     def __iter__(g):    # @NoSelf
         """Itera de 0 a V."""
@@ -167,4 +168,3 @@ class Arista:
     
     def get_to (self):
         return self.dst
-    
