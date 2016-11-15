@@ -27,6 +27,9 @@ class Vert:
     def get_weight (self, dst):
         return self.vecinos[dst].get_weight()
 
+    def get_flow (self, dst):
+        return self.vecinos[dst].get_flow()
+
     def visitar(self):
         self.visitado = True
 
@@ -147,21 +150,49 @@ class Digraph:
         for i in range(0,len(g.vertices)):
             g.vertices[i].set_padre_vacio()
     
+    def find_path(g, src, dst, path):
+    if src == dst:
+        return path
+    for edge in src.get_neighbors():
+        residual = edge.get_weight() - edge.get_flow()
+        if residual > 0 and edge not in path:
+            result = g.find_path( edge.sink, dst, path + [edge]) 
+            if result != None:
+                return result
+
+    def max_flow(g, src, dst):
+        path = g.find_path(source, sink, [])
+        while path != None:
+            residuals = [edge.get_weight() - edge.get_flow() for edge in path]
+            flow = min(residuals)
+            for edge in path:
+                edge.set_flow(edge.get_flow + flow)
+                edge.set_flow_reverse(edge.get_flow_reverse() - flow)
+
+            path = find_path(source, sink, [])
+        return sum(edge.get_flow() for edge in src.get_neighbors())
 
 class Arista:
     """Arista de un grafo.
       """
-    def __init__(self, src, dst, weight=0):
+    def __init__(self, src, dst, weight=0, flow=0):
         # inicializar y do things 
         self.src = src
         self.dst = dst
         self.weight = weight
-      
+        self.flow = flow
+
     def get_weight (self):
         return self.weight
+
+    def get_flow (self):
+        return self.flow
     
     def set_weight(self,weight):
         self.weight = weight
+    
+    def set_flow(self,flow):
+        self.weight = flow
         
     def get_from (self):
         return self.src
