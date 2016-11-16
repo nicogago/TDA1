@@ -3,7 +3,7 @@
 
 from proyecto import *
 from especialista import *
-from tadgrafo import *
+from tadgrafo2 import *
 
 def procesoArchivo():
 	# SE LEE EL ARCHIVO DE CONFIGURACION INICIAL Y SE DEJA INICIALIZADAS LAS VARIABLES
@@ -100,24 +100,26 @@ def inicializoGrafo():
 		for i in grafo.adj_e(nodos["especialista" + str(j)]):
 			print i.get_weight()
 
-def fordFulkerson(s="s",t="t"):
-	path = find_path(s, t, [])
-	residual = []
-	while path != None:
-		for i in range(0,len(path)):
-			aristasAdyacentes = grafo.adj_e(path[i])
-			for arista in aristasAdyacentes:
-				if path[i+1] == arista.get_to():
-					residual.append(arista.get_weight())
-		flujo = min(residual)
-		for i in range(0,len(path)):
-			aristasAdyacentes = grafo.adj_e(path[i])
-			for arista in aristasAdyacentes:
-				if path[i+1] == arista.get_to():
-					arista.set_weight(arista.get_weight()-flujo)
-					path = find_path(s, t, [])
+	"""
+	def fordFulkerson(s="s",t="t"):
+		path = find_path(s, t, [])
+		residual = []
+		while path != None:
+			for i in range(0,len(path)):
+				aristasAdyacentes = grafo.adj_e(path[i])
+				for arista in aristasAdyacentes:
+					if path[i+1] == arista.get_to():
+						residual.append(arista.get_weight())
+			flujo = min(residual)
+			for i in range(0,len(path)):
+				aristasAdyacentes = grafo.adj_e(path[i])
+				for arista in aristasAdyacentes:
+					if path[i+1] == arista.get_to():
+						arista.set_weight(arista.get_weight()-flujo)
+						path = find_path(s, t, [])
+	"""
 	#prueba
-	print grafo.max_flow("s","t")
+	print grafo.max_flow(nodos["s"],nodos["t"])
 	print grafo.V()
 	print grafo.E()
 	print "aristas de s"
@@ -135,20 +137,20 @@ def fordFulkerson(s="s",t="t"):
 		print "arista de especialista"+str(j)
 		for i in grafo.adj_e(nodos["especialista" + str(j)]):
 			print i.get_weight()
-	
 
-	
+
+"""	
 def find_path( s, t, path):
 	if s == t:
 		return path
 	resultado = None
 	for e in grafo.adj_e(s):
-		residual = e.get_weight() 
+		residual = s.get_weight(e) 
 		if residual > 0 and e not in path:
 			resultado = find_path( e.get_to(), t, path + [e]) 
 			if resultado != None:
 				return resultado
-	
+"""	
 	
 # Se imprimen los seteos inicializados, prueba.
 """
