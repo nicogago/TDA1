@@ -151,17 +151,19 @@ class Digraph:
             g.vertices[i].set_padre_vacio()
     
     def find_path(g, src, dst, path):
-    if src == dst:
-        return path
-    for edge in src.get_neighbors():
-        residual = edge.get_weight() - edge.get_flow()
-        if residual > 0 and edge not in path:
-            result = g.find_path( edge.sink, dst, path + [edge]) 
-            if result != None:
-                return result
+	    if src == dst:
+	        return path
+	    for edge in g. src.get_neighbors():
+	        residual = edge.get_weight() - edge.get_flow()
+	        if residual > 0 and edge not in path:
+	            result = g.find_path( edge.sink, dst, path + [edge]) 
+	            if result != None:
+	                return result
 
-    def max_flow(g, src, dst):
-        path = g.find_path(source, sink, [])
+    def max_flow(g, c_src, c_dst):
+    	src = g.get_V(c_src)
+    	dst = g.get_V(c_dst)
+        path = g.find_path(src, dst, [])
         while path != None:
             residuals = [edge.get_weight() - edge.get_flow() for edge in path]
             flow = min(residuals)
@@ -169,7 +171,7 @@ class Digraph:
                 edge.set_flow(edge.get_flow + flow)
                 edge.set_flow_reverse(edge.get_flow_reverse() - flow)
 
-            path = find_path(source, sink, [])
+            path = find_path(src, dst, [])
         return sum(edge.get_flow() for edge in src.get_neighbors())
 
 class Arista:
