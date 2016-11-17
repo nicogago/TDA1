@@ -119,7 +119,6 @@ def inicializoGrafo():
 						path = find_path(s, t, [])
 	"""
 	#prueba
-	print "------------------------------------"
 	g = Digraph(6)
 	g.add_edge(0,1,3)
 	g.add_edge(0,2,3)
@@ -132,7 +131,6 @@ def inicializoGrafo():
 	print (g.max_flow(0,5))
 	#print grafo.max_flow(nodos["s"],nodos["t"])
 
-	print "------------------------------------"
 
 
 
