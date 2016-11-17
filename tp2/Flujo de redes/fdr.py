@@ -79,24 +79,7 @@ def inicializoGrafo():
 			especialista = "especialista"+ str(areas_requeridas[j])
 			peso = gananciaMaxima +1
 			grafo.add_edge(nodos[proyecto], nodos[especialista], peso)
-	#prueba
-	print grafo.V()
-	print grafo.E()
-	print "aristas de s"
-	for i in grafo.adj_e(nodos["s"]):
-		print i.get_weight()
-	print "aristas de t"
-	for i in grafo.adj_e(nodos["t"]):
-		print i.get_weight()
-	for j in range(1,3):
-		print "arista de proyecto"+str(j)
-		for i in grafo.adj_e(nodos["proyecto" + str(j)]):
-			print i.get_weight()
 
-	for j in range(1,4):
-		print "arista de especialista"+str(j)
-		for i in grafo.adj_e(nodos["especialista" + str(j)]):
-			print i.get_weight()
 	return grafo
 
 	"""
