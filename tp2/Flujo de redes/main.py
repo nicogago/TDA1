@@ -4,6 +4,5 @@
 from fdr import *
 
 procesoArchivo()
-inicializoGrafo()
-
-#fordFulkerson()
+grafo = inicializoGrafo()
+grafo.fordFulkerson(0,grafo.V()-1)

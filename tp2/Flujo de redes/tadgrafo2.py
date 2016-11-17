@@ -190,7 +190,7 @@ class Digraph:
                 if result != None:
                     return result
 
-    def max_flow(g, src, dst):
+    def fordFulkerson(g, src, dst):
         path = g.find_path(src, dst, [])
         while path != None:
             residuals = [arista.weight - g.flow[arista] for arista in path]
