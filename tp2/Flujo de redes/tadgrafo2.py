@@ -199,5 +199,6 @@ class Digraph:
                 g.flow[arista] += flow
                 g.flow[arista.reversa_arista] -= flow
             path = g.find_path(src, dst, [])
+        print g.flow
         return sum(g.flow[arista] for arista in g.get_A_Adj(src))
 

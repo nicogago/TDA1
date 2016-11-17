@@ -76,7 +76,7 @@ def inicializoGrafo():
 		for j in range(0,len(areas_requeridas)):
 			#agrego la gananciaMaxima + 1 para simular infinito
 			proyecto = str("proyecto") + str(i+1)
-			especialista = "especialista"+ str(j+1)
+			especialista = "especialista"+ str(areas_requeridas[j])
 			peso = gananciaMaxima +1
 			grafo.add_edge(nodos[proyecto], nodos[especialista], peso)
 	#prueba
