@@ -5,7 +5,7 @@ from proyecto import *
 from especialista import *
 from tadgrafo2 import *
 
-def procesoArchivo():
+def procesoArchivo(archivo):
 	# SE LEE EL ARCHIVO DE CONFIGURACION INICIAL Y SE DEJA INICIALIZADAS LAS VARIABLES
 	#
 	# n: se deja la cantidad de areas o especialidades
