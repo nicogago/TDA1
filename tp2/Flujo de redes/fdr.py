@@ -80,7 +80,6 @@ def inicializoGrafo():
 			especialista = "especialista"+ str(j+1)
 			peso = gananciaMaxima +1
 			grafo.add_edge(nodos[proyecto], nodos[especialista], peso)
-	
 	#prueba
 	print grafo.V()
 	print grafo.E()
@@ -99,6 +98,7 @@ def inicializoGrafo():
 		print "arista de especialista"+str(j)
 		for i in grafo.adj_e(nodos["especialista" + str(j)]):
 			print i.get_weight()
+
 
 	"""
 	def fordFulkerson(s="s",t="t"):
@@ -119,7 +119,25 @@ def inicializoGrafo():
 						path = find_path(s, t, [])
 	"""
 	#prueba
-	print grafo.max_flow(nodos["s"],nodos["t"])
+	print "------------------------------------"
+	g = Digraph(6)
+	g.add_edge(0,1,3)
+	g.add_edge(0,2,3)
+	g.add_edge(1,2,2)
+	g.add_edge(1,3,3)
+	g.add_edge(2,4,2)
+	g.add_edge(4,5,3)
+	g.add_edge(3,4,4)
+	g.add_edge(3,5,2)
+	print (g.max_flow(0,5))
+	#print grafo.max_flow(nodos["s"],nodos["t"])
+
+	print "------------------------------------"
+
+
+
+	
+	"""
 	print grafo.V()
 	print grafo.E()
 	print "aristas de s"
@@ -137,7 +155,7 @@ def inicializoGrafo():
 		print "arista de especialista"+str(j)
 		for i in grafo.adj_e(nodos["especialista" + str(j)]):
 			print i.get_weight()
-
+"""
 
 """	
 def find_path( s, t, path):

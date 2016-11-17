@@ -3,6 +3,7 @@
 import random
 from tadCaminos import *
 from constantes import *
+from collections import defaultdict
 
 class Vert:
     def __init__(self,node):
@@ -70,7 +71,7 @@ class Arista:
         return self.dst
     
     def __repr__(self):
-        return "%s->%s:%s" % (self.source, self.sink, self.capacity)
+        return "%s->%s:%s" % (self.src, self.dst, self.weight)
 
 class Digraph:
     """Grafo no dirigido con un número fijo de vértices.
@@ -87,9 +88,10 @@ class Digraph:
         """
         g.aristas = []
         g.vertices = {}
-        g.adj = {}
-        g.flow = {}
- 
+
+        g.adj = defaultdict(list)
+        g.flow = defaultdict(list)
+
         for i in range(0,V):
             new_vert = Vert(i)
             g.vertices[i] = new_vert
@@ -180,6 +182,8 @@ class Digraph:
 
     def find_path(g, src, dst, path):
         if src == dst:
+            print src
+            print dst
             return path
         for arista in g.get_A_Adj(src):
             residual = arista.weight - g.flow[arista]
@@ -191,6 +195,7 @@ class Digraph:
     def max_flow(g, src, dst):
         path = g.find_path(src, dst, [])
         while path != None:
+            print path
             residuals = [arista.weight - g.flow[arista] for arista in path]
             flow = min(residuals)
             for arista in path:

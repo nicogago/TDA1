@@ -6,4 +6,4 @@ from fdr import *
 procesoArchivo()
 inicializoGrafo()
 
-fordFulkerson()
+#fordFulkerson()
