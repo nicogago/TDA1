@@ -12,7 +12,7 @@ def procesoArchivo(archivo):
 	# m: son la cantidad de proyectos
 	# costo_areas: es un diccionario que tiene como id numero de area y valor su especialista
 	# ganancia_req: es un diccionario que tiene como id numero de proy y valor su proyecto
-	archivo = open("archivo.txt")
+	archivo = open(archivo)
 	n = archivo.readline()
 	n = n.rstrip('\n')
 	n = int(n)
