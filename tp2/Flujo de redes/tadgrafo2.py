@@ -201,4 +201,20 @@ class Digraph:
             path = g.find_path(src, dst, [])
         print g.flow
         return sum(g.flow[arista] for arista in g.get_A_Adj(src))
+    
+    def minimalCut(self, src):
+        visited = set()
+        nodosARecorrer = [src]
+        resultado = []
+        while nodosARecorrer:
+            nodo = nodosARecorrer.pop()
+            if nodo not in visited: 
+                visited.add(nodo)
+                for arista in self.get_A_Adj(nodo):  
+                    destino = arista.dst
+                    if destino not in visited and arista.weight - self.flow[arista] <>0 :
+                        resultado.append(destino)
+                        nodosARecorrer.append(destino)
+            
+        return resultado
 
