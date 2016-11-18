@@ -14,15 +14,25 @@ def viajante(inicio, M):
         if (str(x)+str(conjunto)) in  costos:
             return costos[str(x)+str(conjunto)]
 
+        if (len(conjunto) == 1):
+            if (str(conjunto[0])+str([x])) in costos:
+                return costos[str(conjunto[0])+str([x])]
+
         if (len(conjunto) == 0):
 #            print 'g(', x, ',[]) = ', M[x][v]
-            return M[x][v]
+            try:
+                return M[x][v]
+            except IndexError:
+                return M[v][x]
 
         values = []
         for elem in conjunto:
             subconjunto = list(conjunto)
             subconjunto.remove(elem)
-            values.append(M[x][elem] + D(elem, subconjunto))
+            try:
+                values.append(M[x][elem] + D(elem, subconjunto))
+            except IndexError:
+                values.append(M[elem][x] + D(elem, subconjunto))
 #        print 'g(', x, ',',conjunto,') = ', min(values)
         costo_min = min(values)
         costos[str(x)+str(conjunto)] = costo_min
@@ -44,5 +54,5 @@ def viajante(inicio, M):
     recorrido(v, S)
     rec.insert(0, v+1)
     rec.append(v+1)
-    print rec
-    return costoTotal
+    print 'Recorrido: ', rec
+    print 'Costo Total:', costoTotal
