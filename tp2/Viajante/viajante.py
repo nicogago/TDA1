@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from time import time
 
 # 0 < inicio <= len(M)
 def viajante(inicio, M):
@@ -11,15 +12,12 @@ def viajante(inicio, M):
     rec = []
 
     def D(x, conjunto):
+        # Devuelve una solución parcial si es que existe
         if (str(x)+str(conjunto)) in  costos:
             return costos[str(x)+str(conjunto)]
 
-        if (len(conjunto) == 1):
-            if (str(conjunto[0])+str([x])) in costos:
-                return costos[str(conjunto[0])+str([x])]
-
+        # Para matrices simétricas y asimétricas
         if (len(conjunto) == 0):
-#            print 'g(', x, ',[]) = ', M[x][v]
             try:
                 return M[x][v]
             except IndexError:
@@ -33,10 +31,10 @@ def viajante(inicio, M):
                 values.append(M[x][elem] + D(elem, subconjunto))
             except IndexError:
                 values.append(M[elem][x] + D(elem, subconjunto))
-#        print 'g(', x, ',',conjunto,') = ', min(values)
         costo_min = min(values)
         costos[str(x)+str(conjunto)] = costo_min
         prox_vert_cercano = conjunto[values.index(costo_min)]
+        # Guardamos el nodo padre para un subconjunto para luego hallar el recorrido
         parents[str(x)+str(conjunto)] = prox_vert_cercano
         return min(values)
 
@@ -44,13 +42,16 @@ def viajante(inicio, M):
         if len(conjunto) == 0:
             return
         vertice = parents[str(x)+str(conjunto)]
-#        print 'p(', x, ',', str(conjunto),') = ', vertice
         rec.insert(0, vertice+1)
         subconjunto = list(conjunto)
         subconjunto.remove(vertice)
         recorrido(vertice, subconjunto)
 
+    t_start = time()
     costoTotal = D(v, S)
+    time_diff = time() - t_start
+    print 'Tiempo de ejecución: ', time_diff, ' segundos'
+
     recorrido(v, S)
     rec.insert(0, v+1)
     rec.append(v+1)

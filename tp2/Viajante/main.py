@@ -12,7 +12,7 @@ from viajante import *
 cant_args = len(sys.argv) - 1
 if cant_args != 2:
     print 'Cantidad de argumentos inválidos. Ejecute el siguiente comando:'
-    print '> python main.py <vértice> <archivo_de_prueba>'
+    print '> python main.py <vértice> testfiles/<archivo_de_prueba>'
     quit()
 
 testfile = str(sys.argv[2])
