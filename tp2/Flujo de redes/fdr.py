@@ -81,20 +81,3 @@ def inicializoGrafo():
 			grafo.add_edge(nodos[proyecto], nodos[especialista], peso)
 
 	return grafo
-
-	"""
-	#prueba
-	g = Digraph(6)
-	g.add_edge(0,1,3)
-	g.add_edge(0,2,3)
-	g.add_edge(1,2,2)
-	g.add_edge(1,3,3)
-	g.add_edge(2,4,2)
-	g.add_edge(4,5,3)
-	g.add_edge(3,4,4)
-	g.add_edge(3,5,2)
-	print (g.max_flow(0,5))
-	#print grafo.max_flow(nodos["s"],nodos["t"])
-	"""
-
-
