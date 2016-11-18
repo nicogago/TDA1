@@ -90,7 +90,7 @@ class Digraph:
         g.vertices = {}
 
         g.adj = defaultdict(list)
-        g.flow = defaultdict(list)
+        g.flow = {}
 
         for i in range(0,V):
             new_vert = Vert(i)
@@ -132,7 +132,7 @@ class Digraph:
 
         arista = Arista(u,v,weight)
         reversa_arista = Arista(v,u,0)
-        arista.reversa_arista = arista
+        arista.reversa_arista = reversa_arista
         reversa_arista.reversa_arista = arista
         g.adj[u].append(arista)
         g.adj[v].append(reversa_arista)
@@ -182,8 +182,6 @@ class Digraph:
 
     def find_path(g, src, dst, path):
         if src == dst:
-            print src
-            print dst
             return path
         for arista in g.get_A_Adj(src):
             residual = arista.weight - g.flow[arista]
@@ -191,16 +189,32 @@ class Digraph:
                 result = g.find_path( arista.dst, dst, path + [arista]) 
                 if result != None:
                     return result
- 
-    def max_flow(g, src, dst):
+
+    def fordFulkerson(g, src, dst):
         path = g.find_path(src, dst, [])
         while path != None:
-            print path
             residuals = [arista.weight - g.flow[arista] for arista in path]
             flow = min(residuals)
             for arista in path:
                 g.flow[arista] += flow
                 g.flow[arista.reversa_arista] -= flow
             path = g.find_path(src, dst, [])
+        print g.flow
         return sum(g.flow[arista] for arista in g.get_A_Adj(src))
+    
+    def minimalCut(self, src):
+        visited = set()
+        nodosARecorrer = [src]
+        resultado = []
+        while nodosARecorrer:
+            nodo = nodosARecorrer.pop()
+            if nodo not in visited: 
+                visited.add(nodo)
+                for arista in self.get_A_Adj(nodo):  
+                    destino = arista.dst
+                    if destino not in visited and arista.weight - self.flow[arista] <>0 :
+                        resultado.append(destino)
+                        nodosARecorrer.append(destino)
+            
+        return resultado
 
