@@ -15,3 +15,6 @@ https://algoritmos-rw.github.io/tda/tp2.html
 
 ### Informe
 https://docs.google.com/document/d/1eYH8BBi5IJTfzdB5tty9Wk74dKl26wd_8oFLeC296Ss
+
+## TP3
+https://algoritmos-rw.github.io/tda/tp3.html
