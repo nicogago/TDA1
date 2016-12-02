@@ -39,8 +39,8 @@ def knapsack(N, W):
     return M[N][W]
 
 
-#dirname = "smallcoeff_pisinger"
-dirname = "hardinstances_pisinger"
+dirname = "smallcoeff_pisinger"
+#dirname = "hardinstances_pisinger"
 
 files = [f for f in listdir(dirname) if isfile(join(dirname, f))]
 for filename in files:
