@@ -64,6 +64,7 @@ class Digraph:
     def __init__(g, V):  # @NoSelf
         """Construye un grafo sin aristas de V vértices.
         """
+        g.map_aristas = {}
         g.aristas = []
         g.vertices = {}
         for i in range(0,V):
@@ -78,16 +79,21 @@ class Digraph:
     def E(g):   # @NoSelf
         """Número de aristas en el grafo.
         """
-        return len(g.aristas)
+        return len(g.map_aristas)#len(g.aristas)
 
     def adj_e(g, v):    # @NoSelf
         """Itera sobre los aristas incidentes _desde_ v.
         """
         aristas_incidentes_de_v = []
-        for i in range(0,len(g.aristas)):
-            if g.aristas[i].get_from() == v :
-                aristas_incidentes_de_v.append(g.aristas[i])
+        for value in g.map_aristas.itervalues():
+            if value.get_from() == v:
+                aristas_incidentes_de_v.append(value)
         return aristas_incidentes_de_v
+
+#        for i in range(0,len(g.aristas)):
+#            if g.aristas[i].get_from() == v :
+#                aristas_incidentes_de_v.append(g.aristas[i])
+#        return aristas_incidentes_de_v
 
 
 
@@ -103,6 +109,7 @@ class Digraph:
         g.vertices[u].add_neighbor(g.vertices[v],weight)
         new_edge = Arista(u,v,weight)
         g.aristas.append(new_edge)
+        g.map_aristas[(u,v)] = new_edge
 
 
     def __iter__(g):    # @NoSelf
@@ -116,11 +123,14 @@ class Digraph:
         return g.vertices[v]
 
     def get_A(self, src, dst):
-        for i in range(0,len(self.aristas)):
-            arista = self.aristas[i]
-            if (arista.get_from() == src ) and (arista.get_to() == dst) :
-                return arista
+        if (src,dst) in  self.map_aristas:
+            return self.map_aristas[(src,dst)]
         return None
+#        for i in range(0,len(self.aristas)):
+#            arista = self.aristas[i]
+#            if (arista.get_from() == src ) and (arista.get_to() == dst) :
+#                return arista
+#        return None
 
     def iter_edges(g):  # @NoSelf
         """Itera sobre todas las aristas del grafo.
@@ -131,7 +141,8 @@ class Digraph:
             • e.dst
             • e.weight
         """
-        return iter(g.aristas)
+        return g.map_aristas.itervalues()
+#        return iter(g.aristas)
 
     def sacar_visitados(g): # @NoSelf
         for i in range(0,len(g.vertices)):

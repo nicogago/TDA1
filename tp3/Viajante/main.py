@@ -29,6 +29,7 @@ M = parse(testfile)
 digraph = Digraph(len(M))
 
 print
+print "Matriz de pesos\n"
 for i in range(0, len(M)):
     print M[i]
     for j in range(0, len(M)):
@@ -38,8 +39,11 @@ for i in range(0, len(M)):
             digraph.add_edge(i, j, M[j][i]) # en caso de error para matrices simétricas
 print
 
-mst_prim(digraph, 0)
+mst = mst_prim(digraph, 0)
 
+print "\nÁrbol de tendido mínimo\n"
+for edge in mst.iter_edges():
+    print "src: ", edge.get_from(), "\tdst: ", edge.get_to(), "\tweight: ", edge.get_weight()
 '''
 #viajante(vertice_id, M)
 d4 = Digraph(4)
