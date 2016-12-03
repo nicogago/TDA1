@@ -233,7 +233,6 @@ class Digraph:
         return resultado
 
     def getScalingFactor(self):
-        print "ohhh plis killl meee !"
         maxArray = 0
         for i in self.iter_edges():
             if i.get_weight() > maxArray:
@@ -241,6 +240,5 @@ class Digraph:
         resultado = 2
         while resultado < maxArray:
             resultado = resultado * 2
-        print resultado/2
         return resultado/2
 
