@@ -193,6 +193,7 @@ class Digraph:
     def fordFulkerson(g, src, dst): # @NoSelf
         scalingFactor = g.getScalingFactor()
         while scalingFactor >= 1:
+            print scalingFactor
             path = g.find_path(src, dst, [],scalingFactor)
             while path != None:
                 residuals = [arista.weight - g.flow[arista] for arista in path]
@@ -204,17 +205,6 @@ class Digraph:
             scalingFactor = scalingFactor/2
         print g.flow
         return sum(g.flow[arista] for arista in g.get_A_Adj(src))
-        
-        """        path = g.find_path(src, dst, [],scalingFactor)
-        while path != None:
-            residuals = [arista.weight - g.flow[arista] for arista in path]
-            flow = min(residuals)
-            for arista in path:
-                g.flow[arista] += flow
-                g.flow[arista.reversa_arista] -= flow
-            path = g.find_path(src, dst, [], scalingFactor)
-        print g.flow
-        return sum(g.flow[arista] for arista in g.get_A_Adj(src))"""
     
     def minimalCut(self, src):
         visited = set()
