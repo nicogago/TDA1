@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from abc import ABCMeta, abstractmethod
 import heapq
-from tadgrafo import *
+from tadgrafo2 import *
 from _heapq import heappush
 from constantes import *
 
