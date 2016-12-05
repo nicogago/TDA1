@@ -13,7 +13,6 @@ def mst_prim(digraph, root):
     mst = Digraph(digraph.V())
     map_parents = {}
     map_weights = {}
-    map_ids = {}
     heap = []
     visited = []
 
@@ -38,16 +37,10 @@ def mst_prim(digraph, root):
             # Verifica si el vértice adyacente se encuentra en el heap
             if (not adj in visited) and (edge.get_weight() < map_weights[dst]):
                 map_parents[dst] = v
-                map_ids[dst] = v.get_id()
                 map_weights[dst] = edge.get_weight()
-    #            visited.append(v)
-
-
-    print "costo para llegar una ciudad (ciudad, costo): \n", map_weights
-    print "padres (hijo, padre): ", map_ids
 
     for dst,src in map_parents.iteritems():
         if src != None:
             mst.add_edge(src.get_id(), dst, map_weights[dst])
+
     return mst
-#    print map_parents
