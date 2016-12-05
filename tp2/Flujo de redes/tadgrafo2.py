@@ -180,25 +180,29 @@ class Digraph:
         for i in range(0,len(g.vertices)):
             g.vertices[i].set_padre_vacio()
 
-    def find_path(g, src, dst, path):
+    def find_path(g, src, dst, path, scalingFactor): # @NoSelf
         if src == dst:
             return path
         for arista in g.get_A_Adj(src):
             residual = arista.weight - g.flow[arista]
             if residual > 0 and arista not in path:
-                result = g.find_path( arista.dst, dst, path + [arista]) 
+                result = g.find_path( arista.dst, dst, path + [arista], scalingFactor) 
                 if result != None:
                     return result
 
-    def fordFulkerson(g, src, dst):
-        path = g.find_path(src, dst, [])
-        while path != None:
-            residuals = [arista.weight - g.flow[arista] for arista in path]
-            flow = min(residuals)
-            for arista in path:
-                g.flow[arista] += flow
-                g.flow[arista.reversa_arista] -= flow
-            path = g.find_path(src, dst, [])
+    def fordFulkerson(g, src, dst): # @NoSelf
+        scalingFactor = g.getScalingFactor()
+        while scalingFactor >= 1:
+            print scalingFactor
+            path = g.find_path(src, dst, [],scalingFactor)
+            while path != None:
+                residuals = [arista.weight - g.flow[arista] for arista in path]
+                flow = min(residuals)
+                for arista in path:
+                    g.flow[arista] += flow
+                    g.flow[arista.reversa_arista] -= flow
+                path = g.find_path(src, dst, [], scalingFactor)
+            scalingFactor = scalingFactor/2
         print g.flow
         return sum(g.flow[arista] for arista in g.get_A_Adj(src))
     
@@ -217,4 +221,14 @@ class Digraph:
                         nodosARecorrer.append(destino)
             
         return resultado
+
+    def getScalingFactor(self):
+        maxArray = 0
+        for i in self.iter_edges():
+            if i.get_weight() > maxArray:
+                maxArray = i.get_weight()
+        resultado = 2
+        while resultado < maxArray:
+            resultado = resultado * 2
+        return resultado/2
 
