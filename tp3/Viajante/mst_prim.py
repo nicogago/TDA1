@@ -5,7 +5,7 @@ from tadgrafo import *
 import heapq
 
 # Algoritmo de Prim
-# A partir de un grafo dirigido, completo y pesado genera un árbol de tendido
+# A partir de un grafo dirigido/no dirigido, completo y pesado genera un árbol de tendido
 # mínimo (Minimum Spanning Tree), el cual es devuelto en un grafo dirigido,
 # no completo y pesado.
 

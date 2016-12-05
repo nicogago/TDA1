@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from constantes import *
+POSITIVE_INFINITY = float("inf")
 
 class Vert:
     def __init__(self,node):
