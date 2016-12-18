@@ -16,10 +16,11 @@ def verificador_zwc(grafo, vertices):
             arista = grafo.get_A(elemAnt,elem)
             if arista == None:
                 return false
-            sumatoria = arista.get_weight()
+            sumatoria = sumatoria + arista.get_weight()
             elemAnt = elem
     arista = grafo.get_A(elem,elem0)
     sumatoria = sumatoria + arista.get_weight()
+    print (sumatoria)
     if sumatoria == 0:
         return True
     return False
@@ -32,8 +33,13 @@ g.add_edge(0,5,4)
 g.add_edge(5,4,3)
 g.add_edge(4,3,1)
 g.add_edge(3,0,-8)
+
+#for adge in g.iter_edges():
+#    print adge
+
 verticesT = [0,5,4,3]
 verticesF = [0,1,2]
+
 res = verificador_zwc(g, verticesT)
 print (res)
 res = verificador_zwc(g, verticesF)
