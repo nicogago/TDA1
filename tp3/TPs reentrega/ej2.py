@@ -9,12 +9,13 @@ def reduce_ss_to_zwc(values):
     # peso ai desde ui hasta vi
     # peso cero desde todos los vj hacia ui
     # peso cero desde todos los vi hacia uj
-    
+    print ("entro rut")
     cantVert = len(values) * 2
     g = Digraph(cantVert)
     i = 0
     for peso in values:
         # peso ai desde ui hasta vi
+        print ("entro for")
         g.add_edge(i,i+1,peso) 
         j = 0
         while j < cantVert:
@@ -23,7 +24,8 @@ def reduce_ss_to_zwc(values):
                 g.add_edge(j+1,i,peso)
                 # peso cero desde todos los vi hacia uj            
                 g.add_edge(i+1,j,peso)
-                j = j + 2
+                print ("entro while")
+            j = j + 2
         i = i + 2        
     return g
 
