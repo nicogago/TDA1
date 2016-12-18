@@ -14,6 +14,8 @@ def verificador_zwc(grafo, vertices):
     for elem in vertices:
         if elem != elem0:
             arista = grafo.get_A(elemAnt,elem)
+            if arista == None:
+                return false
             sumatoria = arista.get_weight()
             elemAnt = elem
     arista = grafo.get_A(elem,elem0)
@@ -22,3 +24,17 @@ def verificador_zwc(grafo, vertices):
         return True
     return False
 
+g = Digraph(6)
+g.add_edge(0,1,3)
+g.add_edge(1,2,4)
+g.add_edge(2,0,2)
+g.add_edge(0,5,4)
+g.add_edge(5,4,3)
+g.add_edge(4,3,1)
+g.add_edge(3,0,-8)
+verticesT = [0,5,4,3]
+verticesF = [0,1,2]
+res = verificador_zwc(g, verticesT)
+print (res)
+res = verificador_zwc(g, verticesF)
+print (res)
